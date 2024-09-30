@@ -39,7 +39,7 @@ typedef struct CacheLine
 
 typedef enum Commands
 {
-    // clang-format off
+	// clang-format off
 	Nop         = 0x00,     // No command
 	CpuInfo     = 0x01,     // Author information
 	Read        = 0x10,     // Load into accumulator
@@ -80,14 +80,13 @@ typedef enum Commands
 	Movcr       = 0x4A,
 	Aaddc2      = 0x4B,
 	Subc2       = 0x4C,
-    // clang-format on
+	// clang-format on
 } Commands_t;
-
 
 /**
  * @brief Initializes the memory of the SC_COMPUTER.
  */
-int sc_memoryInit();
+void sc_memoryInit();
 /**
  * @brief Sets the value of the memory at the given address.
  * @return if adress or value are out of bounds, the function returns -1, if
@@ -108,13 +107,13 @@ int sc_memoryGet(int address, int *value);
  * @return 0 if fine, -1 if error (no file or can't write mem).
  * @param filename Name of the file to save the memory to.
  */
-int sc_memorySave(char *filename);
+int sc_memorySave(const char *filename);
 /**
  * @brief Loads the memory of the SC_COMPUTER from a file.
  * @return 0 if fine, -1 if error (no file or can't read mem).
  * @param filename Name of the file to load the memory from.
  */
-int sc_memoryLoad(char *filename);
+int sc_memoryLoad(const char *filename);
 /**
  * @brief Initializes the registers of the SC_COMPUTER.
  */
