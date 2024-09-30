@@ -1,0 +1,12 @@
+*.out
+undefined
+SimpleAssembler
+SimpleBasic
+sat
+*.o
+*.txt
+obj
+.vscode
+*.a
+*.bin
+main
