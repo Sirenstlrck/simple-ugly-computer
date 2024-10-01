@@ -14,3 +14,5 @@ obj:
 .PHONY: clean
 clean:
 	-@ rm -rf ./obj/
+	-@ rm -rf *.o
+	-@ rm -rf *.out

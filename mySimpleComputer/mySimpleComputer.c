@@ -17,7 +17,7 @@ int sc_isAddressValid(int address)
 
 int sc_memorySet(int address, int value)
 {
-	if (!sc_isAddressValid(address))
+	if (sc_isAddressValid(address) == -1)
 		return -1;
 
 	memory[address] = value;
@@ -26,7 +26,7 @@ int sc_memorySet(int address, int value)
 
 int sc_memoryGet(int address, int *out)
 {
-	if (!sc_isAddressValid(address))
+	if (sc_isAddressValid(address) == -1)
 		return -1;
 
 	*out = memory[address];

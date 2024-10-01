@@ -13,7 +13,7 @@ main:
 execute:
 	./main
 
-.PHONY: clean execute clang-format obj
+.PHONY: clean execute clang-format obj test
 
 clang-format:
 	find . -iname '*.h' -o -iname '*.c' | xargs clang-format -i
@@ -32,5 +32,9 @@ clean:
 	$(MAKE) -C myBigChars/ clean
 	$(MAKE) -C mySimpleComputer/ clean
 	$(MAKE) -C myConsole/ clean
+	$(MAKE) -C tests/ clean
 	rm -rf main.o
 	rm -rf main
+
+test: obj
+	./scripts/BuildAndRunTests.sh
