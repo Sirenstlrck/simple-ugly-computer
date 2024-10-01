@@ -1,8 +1,8 @@
+#include "myBigChars.h"
 #include "mySimpleComputer.h"
 
 int main()
 {
-	sc_memoryInit();
-
+	bc_printA("ABBBAAB");
 	return 0;
 }

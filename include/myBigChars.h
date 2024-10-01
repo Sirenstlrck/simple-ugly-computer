@@ -4,8 +4,8 @@
 #include "myTerm.h"
 #include <stddef.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-#define BIG_CHAR_SIZE 8
 #define EN_GRAPHIC write(1, "\E(0", 4)
 #define DIS_GRAPHIC write(1, "\E(B", 4)
 
