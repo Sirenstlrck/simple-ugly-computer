@@ -26,10 +26,22 @@ int main()
 	assert(sc_regSet(OVERFLOW_MASK, 30) == -1);
 
 	assert(sc_regSet(OVERFLOW_MASK, 1) == 0);
+	assert(sc_regSet(ZERO_DIV_MASK, 1) == 0);
 
+	int getRes;
 	int value;
-	sc_regGet(OVERFLOW_MASK, &value);
+	getRes = sc_regGet(OVERFLOW_MASK, &value);
+	assert(getRes == 0);
 	assert(value == 1);
+
+	getRes = sc_regGet(ZERO_DIV_MASK, &value);
+	assert(getRes == 0);
+	assert(value == 1);
+
+	getRes = sc_regGet(WRONG_COMMAND_MASK, &value);
+	assert(getRes == 0);
+	assert(value == 0);
+
 	sc_regSet(OVERFLOW_MASK, 0);
 
 	sc_regGet(OVERFLOW_MASK, &value);
