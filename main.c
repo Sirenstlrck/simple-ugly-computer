@@ -38,5 +38,6 @@ int main(int argc, const char **argv)
 			printf("%d ", value);
 		}
 	}
+	puts("\n");
 	return 0;
 }

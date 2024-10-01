@@ -117,7 +117,7 @@ int sc_memoryLoad(const char *filename);
 /**
  * @brief Initializes the registers of the SC_COMPUTER.
  */
-int sc_regInit();
+void sc_regInit();
 /**
  * @brief Sets the value of the register at the given address.
  * @param reg Address of the register to be set.
