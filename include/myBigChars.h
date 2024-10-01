@@ -9,8 +9,6 @@
 #define EN_GRAPHIC write(1, "\E(0", 4)
 #define DIS_GRAPHIC write(1, "\E(B", 4)
 
-// echo -e "\E(B"
-
 size_t bc_strlen(const char *str);
 
 int bc_printA(const char *str);

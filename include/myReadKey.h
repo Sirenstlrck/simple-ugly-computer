@@ -20,8 +20,11 @@ enum keys
 };
 
 int rk_readKey(enum keys *);
+
 int rk_myTermSave(void);
+
 int rk_myTermRestore(void);
+
 int rk_myTermRegime(int, int, int, int, int);
 
 #endif // _MY_READ_H
