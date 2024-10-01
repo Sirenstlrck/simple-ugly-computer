@@ -93,7 +93,7 @@ int sc_memorySave(const char *filename);
 
 int sc_memoryLoad(const char *filename);
 
-int sc_regInit();
+void sc_regInit();
 
 int sc_regSet(int reg, int value);
 

@@ -8,11 +8,16 @@ int flags;
 
 CacheLine_t cache[CACHE_SIZE];
 
-void sc_memoryInit() { memset(memory, 0, MEMORY_SIZE); }
+void sc_memoryInit() { memset(memory, 0, MEMORY_SIZE * sizeof(*memory)); }
+
+int sc_isAddressValid(int address)
+{
+	return (address < 0 || address >= MEMORY_SIZE);
+}
 
 int sc_memorySet(int address, int value)
 {
-	if (address < 0 || address >= MEMORY_SIZE)
+	if (sc_isAddressValid(address) == -1)
 		return -1;
 
 	memory[address] = value;
@@ -21,7 +26,7 @@ int sc_memorySet(int address, int value)
 
 int sc_memoryGet(int address, int *out)
 {
-	if (address < 0 || address >= MEMORY_SIZE)
+	if (sc_isAddressValid(address) == -1)
 		return -1;
 
 	*out = memory[address];
@@ -44,23 +49,22 @@ int sc_memoryLoad(const char *filename)
 	return read(fileno(fd), memory, MEMORY_SIZE * sizeof(*memory));
 }
 
-int sc_regInit() { flags = 0; }
+void sc_regInit() { flags = 0; }
 
-int sc_verigyReg(int reg)
+int sc_verifyReg(int reg)
 {
-	if (reg != OVERFLOW_MASK || reg != ZERO_DIV_MASK ||
-		reg != MEM_BOUND_ERR_MASK || reg != IGNORE_IMPULSE_MASK ||
-		reg != WRONG_COMMAND_MASK)
+	if ((reg == OVERFLOW_MASK				 //
+		 || reg == ZERO_DIV_MASK			 //
+		 || reg == MEM_BOUND_ERR_MASK		 //
+		 || reg == IGNORE_IMPULSE_MASK		 //
+		 || reg == WRONG_COMMAND_MASK) == 0) //
 		return -1;
 	return 0;
 }
 
 int sc_regSet(int reg, int value)
 {
-	if (sc_verigyReg(reg) == -1)
-		return -1;
-
-	if (value != 0 || value != 1)
+	if (sc_verifyReg(reg) == -1)
 		return -1;
 
 	if (value == 1)
@@ -69,7 +73,18 @@ int sc_regSet(int reg, int value)
 	}
 	else if (value == 0)
 	{
+		flags = (~flags) & reg;
 	}
 	else
 		return -1;
+	return 0;
+}
+
+int sc_regGet(int reg, int *out)
+{
+	if (sc_verifyReg(reg) == -1)
+		return -1;
+
+	*out = (reg & flags) == 0 ? 0 : 1;
+	return 0;
 }
