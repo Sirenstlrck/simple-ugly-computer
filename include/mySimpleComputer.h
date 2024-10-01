@@ -83,126 +83,38 @@ typedef enum Commands
 	// clang-format on
 } Commands_t;
 
-/**
- * @brief Initializes the memory of the SC_COMPUTER.
- */
 void sc_memoryInit();
-/**
- * @brief Sets the value of the memory at the given address.
- * @return if adress or value are out of bounds, the function returns -1, if
- * fine 0
- * @param address Address of the memory to be set.
- * @param value Value of the memory to be set.
- */
+
 int sc_memorySet(int address, int value);
-/**
- * @brief Gets the value of the memory at the given address.
- * @return if adress is out of bounds, the function returns -1, if fine 0
- * @param address Address of the memory to be read.
- * @param value of the memory at the given address.
- */
+
 int sc_memoryGet(int address, int *value);
-/**
- * @brief Saves the memory of the SC_COMPUTER to a file.
- * @return 0 if fine, -1 if error (no file or can't write mem).
- * @param filename Name of the file to save the memory to.
- */
+
 int sc_memorySave(const char *filename);
-/**
- * @brief Loads the memory of the SC_COMPUTER from a file.
- * @return 0 if fine, -1 if error (no file or can't read mem).
- * @param filename Name of the file to load the memory from.
- */
+
 int sc_memoryLoad(const char *filename);
-/**
- * @brief Initializes the registers of the SC_COMPUTER.
- */
-void sc_regInit();
-/**
- * @brief Sets the value of the register at the given address.
- * @param reg Address of the register to be set.
- * @param value Value of the register to be set.
- */
+
+int sc_regInit();
+
 int sc_regSet(int reg, int value);
-/**
- * @brief Gets the value of the register at the given address.
- * @param reg Address of the register to be read.
- * @param value of the register at the given address.
- */
+
 int sc_regGet(int reg, int *value);
-/**
- * @brief Initializes the accumulator of the SC_COMPUTER.
- */
+
 int sc_accumulatorInit();
-/**
- * @brief Sets the value of the accumulator.
- * @param value Value of the accumulator to be set.
- */
+
 int sc_accumulatorSet(int value);
-/**
- * @brief Gets the value of the accumulator.
- * @param value Value of the accumulator.
- */
+
 int sc_accumulatorGet();
-/**
- * @brief Initializes the command counter of the SC_COMPUTER.
- */
+
 int sc_icounterInit(void);
-/**
- * @brief Sets the value of the command counter.
- * @param value Value of the command counter to be set.
- */
+
 int sc_icounterSet(int value);
-/**
- * @brief Gets the value of the command counter.
- * @param value Value of the command counter.
- */
+
 int sc_icounterGet();
-/**
- * @brief encodes command
- * @param sign sign of the command
- * @param command command to be encoded
- * @param operand operand of the command
- * @param value value of the command
- */
+
 int sc_commandEncode(int sign, int command, int operand, int *value);
-/**
- * @brief decodes command
- * @param value value of the command
- * @param sign sign of the command
- * @param command command to be decoded
- * @param operand operand of the command
- */
+
 int sc_commandDecode(int value, int *sign, int *command, int *operand);
-/**
- * @brief validates command
- * @param command command to be validated
- */
+
 int sc_commandValidate(int command);
-/**
- * @brief prints value of cell at given address
- * @param address address of the cell to be printed
- */
-
-void sc_termSet(int address, int input);
-
-int ALU(int command, int operand);
-
-int sc_clockcounterInit();
-int sc_clockcounterGet();
-int sc_clockcounterSet(int value);
-
-sighandler_t signal(int signum, sighandler_t handler);
-
-void irc(int signum);
-
-void CU(void);
-
-void sc_cacheWrite(int address, int value);
-void sc_cacheInit();
-
-int sc_cacheRead(int address);
-
-void printL1();
 
 #endif //  _MY_SIMPLE_COMPUTER_H

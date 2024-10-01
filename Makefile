@@ -23,12 +23,14 @@ obj:
 	$(MAKE) -C myTerm/
 	$(MAKE) -C myBigChars/
 	$(MAKE) -C mySimpleComputer/
-	$(CC) $(CFLAGS) -c main.c
+	$(MAKE) -C myConsole/ 
+	@$(CC) $(CFLAGS) -c main.c
 
 clean:
 	$(MAKE) -C myReadKey/ clean
 	$(MAKE) -C myTerm/ clean
 	$(MAKE) -C myBigChars/ clean
 	$(MAKE) -C mySimpleComputer/ clean
+	$(MAKE) -C myConsole/ clean
 	rm -rf main.o
 	rm -rf main

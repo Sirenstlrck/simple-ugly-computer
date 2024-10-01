@@ -1,40 +1,30 @@
-#pragma once
+#ifndef _MY_READ_H
+#define _MY_READ_H
 
-#include "mySimpleComputer.h"
-#include <ctype.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <termios.h>
-#include <unistd.h>
 enum keys
 {
-	ESC_KEY,
-	L_KEY,
-	S_KEY,
-	R_KEY,
-	T_KEY,
-	I_KEY,
-	F5_KEY,
-	F6_KEY,
-	KEY_UP,
-	KEY_DOWN,
-	KEY_LEFT,
-	KEY_RIGHT,
-	KEY_ENTER,
-	EMPTY_KEY,
+	Esc_k,
+	L_k,
+	S_k,
+	R_k,
+	T_k,
+	I_k,
+	F5_k,
+	F6_k,
+	Up_k,
+	Down_k,
+	Left_k,
+	Right_k,
+	Enter_k,
+	Empty_k,
 };
 
-int rk_readkey(enum keys *);
+int rk_readKey(enum keys *);
+
 int rk_myTermSave(void);
+
 int rk_myTermRestore(void);
+
 int rk_myTermRegime(int, int, int, int, int);
 
-int rk_readvalue(int *value, int timeout);
+#endif // _MY_READ_H
