@@ -10,21 +10,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MEMORY_SIZE 128
-#define CACHE_DATA 10
-#define CACHE_SIZE 5
-#define FLAGS_SIZE 5
+// clang-format off
 
-#define OVERFLOW_MASK 0b00001
-#define ZERO_DIV_MASK 0b00010
-#define MEM_BOUND_ERR_MASK 0b00100
+#define MEMORY_SIZE         128
+#define CACHE_DATA          10
+#define CACHE_SIZE          5
+#define FLAGS_SIZE          5
+
+#define OVERFLOW_MASK       0b00001
+#define ZERO_DIV_MASK       0b00010
+#define MEM_BOUND_ERR_MASK  0b00100
 #define IGNORE_IMPULSE_MASK 0b01000
-#define WRONG_COMMAND_MASK 0b10000
+#define WRONG_COMMAND_MASK  0b10000
 
-#define MAX_MEM_NUM_SIZE 0x7FFF
+#define WORD_BITS_COUNT     15
 
-#define MAX_COMMAND_SIZE 0x7F
-#define MAX_OPERAND_SIZE 0x7F
+typedef int Word_t;
+
+#define SIGN_OFFSET         (WORD_BITS_COUNT) - 1
+#define COMMAND_OFFSET      7
+#define OPERAND_OFFSET      0
+                                            // 0123456789ABCDE
+#define MAX_WORD            0b00000000000000000111111111111111
+#define SIGN_MASK           0b00000000000000000100000000000000
+#define COMMAND_MASK        0b00000000000000000011111110000000
+#define OPERAND_MASK        0b00000000000000000000000001111111
+
+
+#define MAX_COMMAND_SIZE    0x7F
+#define MAX_OPERAND_SIZE    0x7F
+
+// clang-format on
 
 typedef void (*sighandler_t)(int);
 
@@ -99,13 +115,13 @@ int sc_regSet(int reg, int value);
 
 int sc_regGet(int reg, int *value);
 
-int sc_accumulatorInit();
+void sc_accumulatorInit();
 
 int sc_accumulatorSet(int value);
 
 int sc_accumulatorGet();
 
-int sc_icounterInit(void);
+void sc_icounterInit();
 
 int sc_icounterSet(int value);
 
