@@ -8,14 +8,14 @@
 
 typedef enum
 {
-	BLACK = 30,
-	RED,
-	GREEN,
-	YELLOW,
-	BLUE,
-	MAGENTA,
-	CYAN,
-	WHITE
+	Black = 30,
+	Red,
+	Green,
+	Yellow,
+	Blue,
+	Magenta,
+	Cyan,
+	White
 } colors;
 
 #define MIN_SCREEN_WITDH 110

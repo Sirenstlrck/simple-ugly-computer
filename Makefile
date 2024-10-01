@@ -23,7 +23,7 @@ obj:
 	$(MAKE) -C myTerm/
 	$(MAKE) -C myBigChars/
 	$(MAKE) -C mySimpleComputer/
-	$(MAKE) -C console/ 
+	$(MAKE) -C myConsole/ 
 	@$(CC) $(CFLAGS) -c main.c
 
 clean:
@@ -31,6 +31,6 @@ clean:
 	$(MAKE) -C myTerm/ clean
 	$(MAKE) -C myBigChars/ clean
 	$(MAKE) -C mySimpleComputer/ clean
-	$(MAKE) -C console/ clean
+	$(MAKE) -C myConsole/ clean
 	rm -rf main.o
 	rm -rf main

@@ -39,7 +39,7 @@ typedef struct CacheLine
 
 typedef enum Commands
 {
-    // clang-format off
+	// clang-format off
 	Nop         = 0x00,     // No command
 	CpuInfo     = 0x01,     // Author information
 	Read        = 0x10,     // Load into accumulator
@@ -80,9 +80,8 @@ typedef enum Commands
 	Movcr       = 0x4A,
 	Aaddc2      = 0x4B,
 	Subc2       = 0x4C,
-    // clang-format on
+	// clang-format on
 } Commands_t;
-
 
 /**
  * @brief Initializes the memory of the SC_COMPUTER.

@@ -1,7 +1,6 @@
 *.out
 undefined
 SimpleAssembler
-SimpleBasic
 sat
 *.o
 *.txt
