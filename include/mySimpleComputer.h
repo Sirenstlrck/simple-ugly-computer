@@ -30,7 +30,7 @@ typedef int Word_t;
 #define SIGN_OFFSET         (WORD_BITS_COUNT) - 1
 #define COMMAND_OFFSET      7
 #define OPERAND_OFFSET      0
-                                            // 0123456789ABCDE
+                                            //0123456789ABCDEF
 #define MAX_WORD            0b00000000000000000111111111111111
 #define SIGN_MASK           0b00000000000000000100000000000000
 #define COMMAND_MASK        0b00000000000000000011111110000000
@@ -98,6 +98,12 @@ typedef enum Commands
 	Subc2       = 0x4C,
 	// clang-format on
 } Commands_t;
+
+static int memory[MEMORY_SIZE];
+static int accumulator;
+static int instructionCounter;
+static int clockCounter;
+static int flags;
 
 void sc_memoryInit();
 
