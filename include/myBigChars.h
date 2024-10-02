@@ -1,7 +1,7 @@
 #ifndef _MY_BIG_CHARS_H
 #define _MY_BIG_CHARS_H
 
-#include "myTerm.h"
+#include "myTerminal.h"
 #include <ctype.h>
 #include <stddef.h>
 #include <stdio.h>

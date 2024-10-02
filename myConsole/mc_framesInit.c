@@ -1,6 +1,6 @@
 #include "myConsole.h"
 #include "mySimpleComputer.h"
-#include "myTerm.h"
+#include "myTerminal.h"
 
 void strtoupper(char *s)
 {
@@ -25,7 +25,7 @@ void mc_memoryManipulatorInit()
 			x_point = x_startPoint;
 			y_point++;
 		}
-		mt_gotoXY(x_point, y_point);
+		mt_cursorPosition_set(x_point, y_point);
 		x_point += 7;
 		char str[6];
 		sprintf(str, "+%04x", value);
@@ -40,18 +40,18 @@ void mc_clearSpace(int x_start, int y_start, int x_end, int y_end)
 	{
 		for (int j = y_start; j < y_end; j++)
 		{
-			mt_setBackgroundColor(Black);
-			mt_setForegroundColor(White);
-			mt_gotoXY(i, j);
+			mt_outputBackgroundColor_set(Black);
+			mt_outputForegroundColor_set(White);
+			mt_cursorPosition_set(i, j);
 			write(STDIN_FILENO, " ", 1);
-			mt_setDefaultColor();
 		}
 	}
+	mt_restoreDefaultOutputColor();
 }
 
 void mc_framesInit()
 {
-	mt_clearScreen();
+	mt_screen_clear();
 	bc_drawBox(1, 1, 120, 35, 2, White, Black, "Simple Computer", Green, White);
 
 	bc_drawBox(80, 2, 37, 11, 2, White, Black, " Edit cell ", Green, Black);

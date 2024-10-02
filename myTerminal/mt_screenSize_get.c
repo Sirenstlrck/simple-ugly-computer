@@ -1,6 +1,6 @@
-#include "myTerm.h"
+#include "myTerminal.h"
 
-int mt_getScreenSize(int *rows, int *cols)
+int mt_screenSize_get(int *rows, int *cols)
 {
 	int flag = 0;
 	struct winsize w;

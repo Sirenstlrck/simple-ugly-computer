@@ -3,7 +3,7 @@
 
 #include "myBigChars.h"
 #include "mySimpleComputer.h"
-#include "myTerm.h"
+#include "myTerminal.h"
 
 #include <stdlib.h>
 #include <time.h>

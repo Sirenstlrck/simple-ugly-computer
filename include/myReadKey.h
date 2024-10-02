@@ -1,30 +1,39 @@
-#ifndef _MY_READ_H
-#define _MY_READ_H
+#ifndef _MY_READKEY_H
+#define _MY_READKEY_H
 
-enum keys
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+
+static struct termios lastSavedTermios;
+static int lastSavedTermios_echoMode;
+static int lastSavedTermios_signalValue;
+
+enum Keys
 {
-	Esc_k,
-	L_k,
-	S_k,
-	R_k,
-	T_k,
-	I_k,
-	F5_k,
-	F6_k,
-	Up_k,
-	Down_k,
-	Left_k,
-	Right_k,
-	Enter_k,
-	Empty_k,
+	Key_Esc,
+	Key_L,
+	Key_S,
+	Key_R,
+	Key_T,
+	Key_I,
+	Key_F5,
+	Key_F6,
+	Key_Up,
+	Key_Down,
+	Key_Left,
+	Key_Right,
+	Key_Enter,
+	Key_Empty,
 };
 
-int rk_readKey(enum keys *);
+int rk_key_read(enum Keys *);
 
-int rk_myTermSave(void);
+int rk_terminal_save();
 
-int rk_myTermRestore(void);
+int rk_terminal_restore();
 
-int rk_myTermRegime(int, int, int, int, int);
+int rk_terminalMode_set(int isCannonicalMode, int inputTimeoutValue,
+						int minChars, int isEchoEnabled, int isSignalProcessed);
 
-#endif // _MY_READ_H
+#endif // _MY_READKEY_H

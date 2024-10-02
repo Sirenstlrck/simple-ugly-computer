@@ -1,5 +1,5 @@
 #include "myBigChars.h"
-#include "myTerm.h"
+#include "myTerminal.h"
 #include <unistd.h>
 
 typedef struct
@@ -80,7 +80,7 @@ int bc_printBigChar(int x, int y, const char *str)
 
 	for (int i = 0; i < BIG_CHAR_LETTER_HEIGHT; ++i)
 	{
-		mt_gotoXY(x, y + i);
+		mt_cursorPosition_set(x, y + i);
 		write(STDOUT_FILENO, outputBuffer[i], strlen(outputBuffer[i]));
 	}
 	return 0;
