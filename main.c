@@ -13,12 +13,6 @@ int main()
 		fprintf(stderr, "Not enough screen space");
 		return -1;
 	}
-
-	// sc_memoryInit();
-	// mc_framesInit();
-	// mt_cursorPosition_set(0, 47);
-
-	canonical_mode_example();
-
+	
 	return 0;
 }

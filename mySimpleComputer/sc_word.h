@@ -12,4 +12,6 @@ int sc_word_setOperand(int *word, int value);
 
 int sc_word_setValue(int *word, int value);
 
+int sc_word_maybeCommand(int word);
+
 #endif

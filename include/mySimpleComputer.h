@@ -10,11 +10,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "sc_memory.h"
+
 // clang-format off
 
 #define MEMORY_SIZE         128
-#define CACHE_DATA          10
-#define CACHE_SIZE          5
 #define FLAGS_SIZE          5
 
 #define OVERFLOW_MASK       0b00001
@@ -25,12 +25,10 @@
 
 #define WORD_BITS_COUNT     15
 
-typedef int Word_t;
-
 #define SIGN_OFFSET         (WORD_BITS_COUNT) - 1
 #define COMMAND_OFFSET      7
 #define OPERAND_OFFSET      0
-                                            //0123456789ABCDEF
+                                            // 0123456789ABCDE
 #define MAX_WORD            0b00000000000000000111111111111111
 #define SIGN_MASK           0b00000000000000000100000000000000
 #define COMMAND_MASK        0b00000000000000000011111110000000
@@ -41,18 +39,6 @@ typedef int Word_t;
 #define MAX_OPERAND_SIZE    0x7F
 
 // clang-format on
-
-typedef void (*sighandler_t)(int);
-
-typedef struct CacheLine
-{
-	int data[CACHE_DATA];
-	int tag;
-	int last_access;
-	int valid;
-	int dirty;
-} CacheLine_t;
-
 typedef enum Commands
 {
 	// clang-format off
@@ -99,22 +85,6 @@ typedef enum Commands
 	// clang-format on
 } Commands_t;
 
-static int memory[MEMORY_SIZE];
-static int accumulator;
-static int instructionCounter;
-static int clockCounter;
-static int flags;
-
-void sc_memoryInit();
-
-int sc_memorySet(int address, int value);
-
-int sc_memoryGet(int address, int *value);
-
-int sc_memorySave(const char *filename);
-
-int sc_memoryLoad(const char *filename);
-
 void sc_regInit();
 
 int sc_regSet(int reg, int value);
@@ -136,7 +106,5 @@ int sc_icounterGet();
 int sc_commandEncode(int sign, int command, int operand, int *value);
 
 int sc_commandDecode(int value, int *sign, int *command, int *operand);
-
-int sc_commandValidate(int command);
 
 #endif //  _MY_SIMPLE_COMPUTER_H

@@ -58,4 +58,18 @@ int sc_word_setValue(int *word, int value)
 		return -1;
 
 	*word = value;
+	return 0;
+}
+
+int sc_word_maybeCommand(int word)
+{
+	int sign = sc_word_getSign(word);
+	if (sign == 1)
+		return 0;
+
+	// TODO:
+	// int cmd;
+	// int success = sc_word_detectCommand(word, &cmd);
+	// return success
+	return 1;
 }
