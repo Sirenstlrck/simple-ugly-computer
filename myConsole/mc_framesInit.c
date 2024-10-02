@@ -19,7 +19,7 @@ void mc_memoryManipulatorInit()
 	for (int i = 0; i < MEMORY_SIZE; ++i)
 	{
 		int value = rand() % MAX_WORD - 1;
-		sc_memorySet(i, value);
+		sc_memory_set(i, value);
 		if (i % 8 == 0)
 		{
 			x_point = x_startPoint;

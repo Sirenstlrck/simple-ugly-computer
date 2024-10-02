@@ -58,6 +58,7 @@ int sc_word_setValue(int *word, int value)
 		return -1;
 
 	*word = value;
+	return 0;
 }
 
 int sc_word_maybeCommand(int word)

@@ -15,7 +15,7 @@ int main()
 		return -1;
 	}
 
-	sc_memoryInit();
+	sc_memory_init();
 	mc_framesInit();
 	mt_gotoXY(0, 47);
 	return 0;

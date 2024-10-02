@@ -10,7 +10,7 @@ tests=$(find ./tests/ -name "*.c")
 echo ================================================
 for test in ${tests}
 do
-    gcc -I./include/ ${test} ${objs} -o ${test}.out
+    gcc -I./include/ ${test} ${objs} -g -O0 -o ${test}.out
     echo ${test}.out
     ${test}.out
     echo

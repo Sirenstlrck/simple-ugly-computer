@@ -2,17 +2,10 @@
 #include "sc_word.h"
 #include <assert.h>
 
-static int memory[MEMORY_SIZE];
 static int accumulator;
 static int instructionCounter;
-static int clockCounter;
+static int downtimeCounter;
 static int flags;
-CacheLine_t cache[CACHE_SIZE];
-
-int sc_isAddressValid(int address)
-{
-	return (address < 0 || address >= MEMORY_SIZE);
-}
 
 int sc_verifyReg(int reg)
 {
@@ -25,42 +18,10 @@ int sc_verifyReg(int reg)
 	return 0;
 }
 
-int sc_isValidInt(int value) { return 0; }
-
-void sc_memoryInit() { memset(memory, 0, MEMORY_SIZE * sizeof(*memory)); }
-
-int sc_memorySet(int address, int value)
+int sc_isValidInt(int value)
 {
-	if (sc_isAddressValid(address) == -1)
-		return -1;
-
-	memory[address] = value;
-	return 0;
-}
-
-int sc_memoryGet(int address, int *out)
-{
-	if (sc_isAddressValid(address) == -1)
-		return -1;
-
-	*out = memory[address];
-	return 0;
-}
-
-int sc_memorySave(const char *filename)
-{
-	FILE *fd = fopen(filename, "w");
-	if (!fd)
-		return -1;
-	return write(fileno(fd), memory, MEMORY_SIZE * sizeof(*memory));
-}
-
-int sc_memoryLoad(const char *filename)
-{
-	FILE *fd = fopen(filename, "r");
-	if (!fd)
-		return -1;
-	return read(fileno(fd), memory, MEMORY_SIZE * sizeof(*memory));
+	assert(0);
+	return -1;
 }
 
 void sc_regInit() { flags = 0; }
