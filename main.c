@@ -11,7 +11,7 @@ int main()
 
 	if (screen_height < MIN_SCREEN_HEIGHT || screen_width < MIN_SCREEN_WITDH)
 	{
-		perror("Not enough screen space");
+		fprintf(stderr, "Not enough screen space\n");
 		return -1;
 	}
 

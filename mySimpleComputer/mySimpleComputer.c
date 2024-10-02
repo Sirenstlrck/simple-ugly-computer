@@ -1,6 +1,12 @@
 #include "mySimpleComputer.h"
 #include "sc_word.h"
+#include <assert.h>
 
+static int memory[MEMORY_SIZE];
+static int accumulator;
+static int instructionCounter;
+static int clockCounter;
+static int flags;
 CacheLine_t cache[CACHE_SIZE];
 
 int sc_isAddressValid(int address)
@@ -88,13 +94,21 @@ int sc_regGet(int reg, int *out)
 
 void sc_accumulatorInit() { accumulator = 0; }
 
-int sc_accumulatorSet(int value) {}
+int sc_accumulatorSet(int value)
+{
+	assert(0);
+	return -1;
+}
 
 int sc_accumulatorGet() { return accumulator; }
 
 void sc_icounterInit() { instructionCounter = 0; }
 
-int sc_icounterSet(int value) {}
+int sc_icounterSet(int value)
+{
+	assert(0);
+	return -1;
+}
 
 int sc_icounterGet() { return instructionCounter; }
 
@@ -126,5 +140,3 @@ int sc_commandDecode(int value, int *sign, int *command, int *operand)
 
 	return 0;
 }
-
-// int sc_step() { sc_memoryGet() }
