@@ -133,4 +133,4 @@ int sc_commandDecode(int value, int *sign, int *command, int *operand)
 	return 0;
 }
 
-int sc_commandValidate(int command) {}
+// int sc_step() { sc_memoryGet() }
