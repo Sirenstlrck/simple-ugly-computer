@@ -19,19 +19,19 @@ clang-format:
 	find . -iname '*.h' -o -iname '*.c' | xargs clang-format -i
 
 obj:
-	$(MAKE) -C myReadKey/
-	$(MAKE) -C myTerminal/
-	$(MAKE) -C myBigChars/
-	$(MAKE) -C mySimpleComputer/
-	$(MAKE) -C myConsole/ 
+	$(MAKE) -C read-key/
+	$(MAKE) -C terminal/
+	$(MAKE) -C big-chars/
+	$(MAKE) -C simple-computer/
+	$(MAKE) -C console/ 
 	@$(CC) $(CFLAGS) -c main.c
 
 clean:
-	$(MAKE) -C myReadKey/ clean
-	$(MAKE) -C myTerminal/ clean
-	$(MAKE) -C myBigChars/ clean
-	$(MAKE) -C mySimpleComputer/ clean
-	$(MAKE) -C myConsole/ clean
+	$(MAKE) -C read-key/ clean
+	$(MAKE) -C terminal/ clean
+	$(MAKE) -C big-chars/ clean
+	$(MAKE) -C simple-computer/ clean
+	$(MAKE) -C console/ clean
 	$(MAKE) -C tests/ clean
 	rm -rf main.o
 	rm -rf main

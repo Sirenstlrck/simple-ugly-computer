@@ -1,0 +1,12 @@
+#ifndef SC_MEMORY_CONFIG_H
+#define SC_MEMORY_CONFIG_H
+
+#define MEMORY_SIZE 128
+
+#define CACHE_LINE_SIZE 10
+#define CACHE_SIZE 5
+
+#define CACHE_MISS_COST 10
+#define CACHE_HIT_COST 1
+
+#endif

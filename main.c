@@ -1,6 +1,6 @@
-#include "myConsole.h"
-#include "mySimpleComputer.h"
-#include "myTerminal.h"
+#include "console.h"
+#include "simple_computer.h"
+#include "terminal.h"
 
 int main()
 {
@@ -13,6 +13,6 @@ int main()
 		fprintf(stderr, "Not enough screen space");
 		return -1;
 	}
-	
+
 	return 0;
 }
