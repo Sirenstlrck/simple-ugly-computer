@@ -5,6 +5,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "simple_computer.h"
+
 static struct termios lastSavedTermios;
 static int lastSavedTermios_echoMode;
 static int lastSavedTermios_signalValue;
@@ -27,7 +29,9 @@ enum Keys
 	Key_Empty,
 };
 
-int rk_key_read(enum Keys *);
+int rk_readKey(enum Keys *);
+
+int rk_readValue();
 
 int rk_terminal_save();
 

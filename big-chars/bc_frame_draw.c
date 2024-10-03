@@ -2,9 +2,9 @@
 #include "terminal.h"
 #include <unistd.h>
 
-int bc_drawBox(int x, int y, int width, int height, int header_shift,
-			   colors box_fg, colors box_bg, char *header, colors header_fg,
-			   colors header_bg)
+int bc_frame_draw(int x, int y, int width, int height, int header_shift,
+				  colors box_fg, colors box_bg, char *header, colors header_fg,
+				  colors header_bg)
 {
 	EN_GRAPHIC;
 	mt_outputBackgroundColor_set(box_bg);
