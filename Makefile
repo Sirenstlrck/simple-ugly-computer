@@ -1,7 +1,7 @@
 export ROOT_DIRECTORY = ${shell pwd}
 
 export CC = gcc
-export CFLAGS = -Wall -Wextra -g -O0 -I ${ROOT_DIRECTORY}/include/
+export CFLAGS =  -g -O0 -I ${ROOT_DIRECTORY}/include/
 
 all: clean clang-format obj main test
 

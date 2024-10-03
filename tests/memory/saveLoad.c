@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../../simple-computer/memory/memory.h"
+#include "simple-computer/memory/memory.h"
 
 const char *filename = "save.bin";
 

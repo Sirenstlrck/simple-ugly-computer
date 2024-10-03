@@ -5,12 +5,12 @@
 #include "memory.h"
 #include "memory/controller.h"
 
-static void dumpLine(int address, CacheLine_t line)
+static void dumpLine(CacheLine_t line)
 {
-	for (int i = 0; i + address < CACHE_LINE_SIZE || i + address < MEMORY_SIZE;
+	for (int i = 0; i < CACHE_LINE_SIZE && i + line.baseAddress < MEMORY_SIZE;
 		 ++i)
 	{
-		int err = sc_memory_set(i + address, line.data[i]);
+		int err = sc_memory_set(i + line.baseAddress, line.data[i]);
 		assert(!err);
 	}
 }
@@ -21,10 +21,9 @@ static void loadLine(int address)
 		sc_memoryCache_getAddressationInfo(address);
 
 	CacheLine_t newLine;
-	newLine.address = addressationInfo.base;
-	for (int i = 0; addressationInfo.base + i < CACHE_LINE_SIZE &&
-					addressationInfo.base + i < MEMORY_SIZE;
-		 ++i)
+	newLine.baseAddress = addressationInfo.base;
+	for (int i = 0;
+		 i < CACHE_LINE_SIZE && addressationInfo.base + i < MEMORY_SIZE; ++i)
 	{
 		int value;
 		int err = sc_memory_get(addressationInfo.base + i, &value);
@@ -33,7 +32,7 @@ static void loadLine(int address)
 	}
 	CacheLine_t oldLine = sc_memoryCache_addLine(newLine);
 	if (oldLine.isOccupied && oldLine.isDirty)
-		dumpLine(address, oldLine);
+		dumpLine(oldLine);
 }
 
 static CacheSeekResult_t ensureCachedSeek(int address, char *cacheMiss)

@@ -1,11 +1,18 @@
 #include <assert.h>
 #include <memory.h>
+#include <stdio.h>
 
 #include "cache.h"
 
 CacheLine_t cache[CACHE_SIZE];
 
 void sc_memoryCache_init() { memset(cache, 0, sizeof(cache)); }
+
+CacheLine_t sc_memoryCache_getLine(int idx)
+{
+	assert(idx >= 0 && idx < CACHE_SIZE);
+	return cache[idx];
+}
 
 CacheAddressationInfo_t sc_memoryCache_getAddressationInfo(int address)
 {
@@ -28,7 +35,7 @@ CacheSeekResult_t sc_memoryCache_seek(int address)
 		if (!line.isOccupied)
 			continue;
 
-		if (result.addressationInfo.base == line.address)
+		if (result.addressationInfo.base == line.baseAddress)
 		{
 			result.isSuccess = 1;
 			result.cacheLineIdx = i;
@@ -57,11 +64,14 @@ void sc_memoryCache_set(CacheSeekResult_t seekResult, int value)
 	line->isDirty = 1;
 }
 
+void dumpLines() {}
+
 // @return Possible overrided cache line. 'isOccupied' setted in 1 if overrided.
 // 'isDirty' setted in 1 if it was modified and memory should be updated.
 CacheLine_t sc_memoryCache_addLine(CacheLine_t line)
 {
 	line.isOccupied = 1;
+	line.isDirty = 0;
 	line.lastAccessTimestamp = time(NULL);
 
 	CacheLine_t *toOverride = &cache[0];
@@ -78,6 +88,7 @@ CacheLine_t sc_memoryCache_addLine(CacheLine_t line)
 			break;
 		}
 	}
+
 	CacheLine_t stored = *toOverride;
 	*toOverride = line;
 	return stored;

@@ -1,4 +1,5 @@
 #include "console.h"
+#include "memory/controller.h"
 #include "simple_computer.h"
 #include "terminal.h"
 
@@ -19,7 +20,7 @@ void mc_memoryManipulatorInit()
 	for (int i = 0; i < MEMORY_SIZE; ++i)
 	{
 		int value = rand() % MAX_WORD - 1;
-		sc_memory_set(i, value);
+		sc_memoryController_set(i, value);
 		if (i % 8 == 0)
 		{
 			x_point = x_startPoint;

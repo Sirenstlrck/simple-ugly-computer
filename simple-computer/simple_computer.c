@@ -1,7 +1,7 @@
 #include <assert.h>
 
+#include "memory/word.h"
 #include "simple_computer.h"
-#include "word.h"
 
 static int accumulator;
 static int instructionCounter;
