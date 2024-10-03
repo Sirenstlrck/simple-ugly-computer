@@ -1,6 +1,6 @@
-#include "myTerm.h"
+#include "myTerminal.h"
 
-int mt_setCursorVisible(int value)
+int mt_cursorVisiblity_set(int value)
 {
 	if (value == 1)
 	{

@@ -1,6 +1,6 @@
-#include "myTerm.h"
+#include "myTerminal.h"
 
-int mt_gotoXY(int x, int y)
+int mt_cursorPosition_set(int x, int y)
 {
 	char str[256];
 	sprintf(str, "\033[%d;%dH", y, x);

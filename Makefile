@@ -20,7 +20,7 @@ clang-format:
 
 obj:
 	$(MAKE) -C myReadKey/
-	$(MAKE) -C myTerm/
+	$(MAKE) -C myTerminal/
 	$(MAKE) -C myBigChars/
 	$(MAKE) -C mySimpleComputer/
 	$(MAKE) -C myConsole/ 
@@ -28,7 +28,7 @@ obj:
 
 clean:
 	$(MAKE) -C myReadKey/ clean
-	$(MAKE) -C myTerm/ clean
+	$(MAKE) -C myTerminal/ clean
 	$(MAKE) -C myBigChars/ clean
 	$(MAKE) -C mySimpleComputer/ clean
 	$(MAKE) -C myConsole/ clean

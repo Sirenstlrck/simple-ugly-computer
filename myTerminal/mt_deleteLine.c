@@ -1,4 +1,4 @@
-#include "myTerm.h"
+#include "myTerminal.h"
 
 int mt_deleteLine(void)
 {

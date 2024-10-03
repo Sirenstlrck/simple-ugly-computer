@@ -3,7 +3,7 @@
 
 #include "myBigChars.h"
 #include "myReadKey.h"
-#include "myTerm.h"
+#include "myTerminal.h"
 #include <limits.h>
 #include <math.h>
 #include <signal.h>

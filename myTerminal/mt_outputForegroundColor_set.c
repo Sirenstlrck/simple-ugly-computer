@@ -1,6 +1,6 @@
-#include "myTerm.h"
+#include "myTerminal.h"
 
-int mt_setForegroundColor(colors color)
+int mt_outputForegroundColor_set(colors color)
 {
 	char str[256];
 	sprintf(str, "\033[%dm", color);
