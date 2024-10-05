@@ -1,7 +1,7 @@
 #include "console.h"
 #include "memory/controller.h"
-#include "simple_computer.h"
 #include "terminal.h"
+#include "word/word.h"
 
 void strtoupper(char *s)
 {

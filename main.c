@@ -1,5 +1,4 @@
 #include "console.h"
-#include "simple_computer.h"
 #include "terminal.h"
 
 int main()

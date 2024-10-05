@@ -5,7 +5,7 @@
 #include <time.h>
 
 #include "big_chars.h"
-#include "simple_computer.h"
+#include "memory/config.h"
 #include "terminal.h"
 
 extern int memory[MEMORY_SIZE];

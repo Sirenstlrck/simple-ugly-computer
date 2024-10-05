@@ -1,42 +1,3 @@
-#ifndef _MY_SIMPLE_COMPUTER_H
-#define _MY_SIMPLE_COMPUTER_H
-
-#include <limits.h>
-#include <math.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "big_chars.h"
-#include "read_key.h"
-#include "terminal.h"
-
-// clang-format off
-
-#define MEMORY_SIZE         128
-#define FLAGS_SIZE          5
-
-#define OVERFLOW_MASK       0b00001
-#define ZERO_DIV_MASK       0b00010
-#define MEM_BOUND_ERR_MASK  0b00100
-#define IGNORE_IMPULSE_MASK 0b01000
-#define WRONG_COMMAND_MASK  0b10000
-
-#define WORD_BITS_COUNT     15
-
-#define SIGN_OFFSET         (WORD_BITS_COUNT) - 1
-#define COMMAND_OFFSET      7
-#define OPERAND_OFFSET      0
-                                            // 0123456789ABCDE
-#define MAX_WORD            0b00000000000000000111111111111111
-#define SIGN_MASK           0b00000000000000000100000000000000
-#define COMMAND_MASK        0b00000000000000000011111110000000
-#define OPERAND_MASK        0b00000000000000000000000001111111
-
-
-#define MAX_COMMAND_SIZE    0x7F
-#define MAX_OPERAND_SIZE    0x7F
-
 // clang-format on
 typedef enum Commands
 {
@@ -83,27 +44,3 @@ typedef enum Commands
 	Subc2       = 0x4C,
 	// clang-format on
 } Commands_t;
-
-void sc_regInit();
-
-int sc_regSet(int reg, int value);
-
-int sc_regGet(int reg, int *value);
-
-void sc_accumulatorInit();
-
-int sc_accumulatorSet(int value);
-
-int sc_accumulatorGet();
-
-void sc_icounterInit();
-
-int sc_icounterSet(int value);
-
-int sc_icounterGet();
-
-int sc_commandEncode(int sign, int command, int operand, int *value);
-
-int sc_commandDecode(int value, int *sign, int *command, int *operand);
-
-#endif //  _MY_SIMPLE_COMPUTER_H
