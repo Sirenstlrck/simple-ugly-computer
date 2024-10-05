@@ -35,6 +35,22 @@ void basicArithmetic()
 	assert(sc_word_mulChecked(left, right).result == 2 * -3);
 }
 
+void edgeOverflow()
+{
+	Word_t left, right;
+	sc_word_fromInt(MAX_WORD_RAW, &left);
+	sc_word_fromInt(1, &right);
+	ArithmeticResult_t res = sc_word_addChecked(left, right);
+	assert(res.overflow);
+	assert(res.result == MIN_WORD_RAW);
+
+	sc_word_fromInt(MIN_WORD_RAW, &left);
+	sc_word_fromInt(1, &right);
+	res = sc_word_subChecked(left, right);
+	assert(res.overflow);
+	assert(res.result == MAX_WORD_RAW);
+}
+
 void checkedArithmetic()
 {
 	Word_t left, right;
@@ -43,22 +59,45 @@ void checkedArithmetic()
 
 	ArithmeticResult_t opRes = sc_word_addChecked(left, right);
 	assert(opRes.overflow);
-	assert(opRes.result == -16354);
+	assert(opRes.result == MIN_WORD_RAW + 29);
 
 	sc_word_fromInt(MIN_WORD_RAW, &left);
 	sc_word_fromInt(50, &right);
 	opRes = sc_word_subChecked(left, right);
 	assert(opRes.overflow);
-	assert(opRes.result == 16335);
+	assert(opRes.result == MAX_WORD_RAW - 49);
 
-	sc_word_fromInt(MAX_WORD_RAW - 50, &left);
+	sc_word_fromInt(MAX_WORD_RAW, &left);
 	sc_word_fromInt(2, &right);
 	opRes = sc_word_mulChecked(left, right);
+
+	assert(opRes.overflow);
+	assert(opRes.result == -2);
+
+	assert(sc_word_mulChecked(left, right).result ==
+		   sc_word_mulChecked(right, left).result);
+
+	sc_word_fromInt(MIN_WORD_RAW, &left);
+	opRes = sc_word_mulChecked(left, 2);
+	assert(opRes.overflow);
+	assert(opRes.result == 0);
+}
+
+void division()
+{
+	assert(sc_word_div(-11, 0).zeroDiv);
+	assert(sc_word_div(11, 2).result == 11 / 2);
+	assert(sc_word_div(11, -2).result == 11 / -2);
+	assert(sc_word_div(-11, 2).result == -11 / 2);
+	assert(sc_word_div(-11, -2).result == -11 / -2);
 }
 
 int main()
 {
+
 	fromInt();
 	basicArithmetic();
+	edgeOverflow();
 	checkedArithmetic();
+	division();
 }

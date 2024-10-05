@@ -11,9 +11,16 @@ typedef struct ArithmeticResult
 	Word_t result;
 } ArithmeticResult_t;
 
+typedef struct DivisionResult
+{
+	unsigned char zeroDiv;
+	int result;
+} DivisionResult_t;
+
 ArithmeticResult_t sc_word_addChecked(Word_t lhs, Word_t rhs);
 ArithmeticResult_t sc_word_subChecked(Word_t lhs, Word_t rhs);
 ArithmeticResult_t sc_word_mulChecked(Word_t lhs, Word_t rhs);
+DivisionResult_t sc_word_div(Word_t lhs, Word_t rhs);
 
 Word_t sc_word_negate(Word_t word);
 
