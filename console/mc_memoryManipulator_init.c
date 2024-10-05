@@ -7,7 +7,7 @@ void mc_selectedLabel_set(int address)
 	memoryManipulator[selectedAddressIndex].background_color = Black;
 	memoryManipulator[selectedAddressIndex].foreground_color = White;
 	mc_label_render(&memoryManipulator[selectedAddressIndex]);
-	selectedAddressIndex = address;
+	selectedAddressIndex									 = address;
 	memoryManipulator[selectedAddressIndex].background_color = White;
 	memoryManipulator[selectedAddressIndex].foreground_color = Black;
 	mc_label_render(&memoryManipulator[selectedAddressIndex]);
@@ -67,7 +67,7 @@ void mc_memoryManipulator_init()
 		x_point += 6;
 		char str[6];
 		sprintf(str, "+%04x", value);
-		Label_t label = {x_point, y_point, strdup(str), Black, White};
+		Label_t label		 = {x_point, y_point, strdup(str), Black, White};
 		memoryManipulator[i] = label;
 	}
 }

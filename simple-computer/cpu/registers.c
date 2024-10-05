@@ -65,10 +65,10 @@ int sc_reg_isFlagSetted(int flag)
 
 void sc_reg_reset()
 {
-	accumulator = 0;
+	accumulator		   = 0;
 	instructionCounter = 0;
-	downtimeCounter = 0;
-	flags = 0;
-	int err = sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
+	downtimeCounter	   = 0;
+	flags			   = 0;
+	int err			   = sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
 	assert(!err);
 }

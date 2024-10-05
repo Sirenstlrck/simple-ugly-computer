@@ -12,3 +12,13 @@ NamespaceIndentation: All
 AlignOperands: AlignAfterOperator
 AlignTrailingComments:
   Kind: Always
+
+AlignConsecutiveMacros: 
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: false
+AlignConsecutiveAssignments: Consecutive
+
+AlignEscapedNewlines: Right
+
+FixNamespaceComments: true

@@ -43,11 +43,11 @@ ArithmeticResult_t sc_word_mulChecked(Word_t lhs, Word_t rhs)
 	ASSERT_2WORDS_BOUNDS(lhs, rhs);
 	// hahaha
 	ArithmeticResult_t mulRes;
-	mulRes.result = 0;
+	mulRes.result	= 0;
 	mulRes.overflow = 0;
 
 	int rhsSign = sc_word_getSign(rhs);
-	int ie = rhsSign ? sc_word_negate(rhs) : rhs;
+	int ie		= rhsSign ? sc_word_negate(rhs) : rhs;
 	for (int i = 0; i < ie; ++i)
 	{
 		ArithmeticResult_t addRes = rhsSign
@@ -79,21 +79,21 @@ DivisionResult_t sc_word_div(Word_t lhs, Word_t rhs)
 	if (sc_word_getSign(lhs))
 	{
 		resSign = !resSign;
-		lhs = sc_word_negate(lhs);
+		lhs		= sc_word_negate(lhs);
 	}
 	if (sc_word_getSign(rhs))
 	{
 		resSign = !resSign;
-		rhs = sc_word_negate(rhs);
+		rhs		= sc_word_negate(rhs);
 	}
 
-	int acc = lhs;
-	divRes.result = -1;
+	int acc		   = lhs;
+	divRes.result  = -1;
 	divRes.zeroDiv = 0;
 	while (acc >= 0)
 	{
 		ArithmeticResult_t subRes = sc_word_subChecked(acc, rhs);
-		acc = subRes.result;
+		acc						  = subRes.result;
 		divRes.result++;
 	}
 

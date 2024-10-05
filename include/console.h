@@ -21,8 +21,8 @@ typedef struct Label
 
 static Label_t memoryManipulator[MEMORY_SIZE];
 static int selectedAddressIndex = 0;
-static int isImpulseTact = 0;
-static int exitFlag = 0;
+static int isImpulseTact		= 0;
+static int exitFlag				= 0;
 
 void mc_frames_render();
 void mc_clearSpace(int x_start, int y_start, int x_end, int y_end);

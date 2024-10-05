@@ -55,14 +55,14 @@ void assertDecode()
 	int cmd;
 	int err;
 
-	const int sign = 0;
+	const int sign	  = 0;
 	const int command = 30;
 	const int operand = 100;
 
 	err = sc_word_commandEncode(sign, command, operand, &cmd);
 	assert(err == 0);
 
-	int decodedSign = -1;
+	int decodedSign	   = -1;
 	int decodedCommand = -1;
 	int decodedOperand = -1;
 	err = sc_word_commandDecode(cmd, &decodedSign, &decodedCommand,

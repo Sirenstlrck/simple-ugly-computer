@@ -6,7 +6,7 @@ int rk_terminal_save()
 	{
 		return -1;
 	}
-	lastSavedTermios_echoMode = lastSavedTermios.c_lflag & ECHO;
+	lastSavedTermios_echoMode	 = lastSavedTermios.c_lflag & ECHO;
 	lastSavedTermios_signalValue = lastSavedTermios.c_lflag & ISIG;
 	return 0;
 }

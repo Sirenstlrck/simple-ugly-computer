@@ -38,7 +38,7 @@ static void loadLine(int address)
 static CacheSeekResult_t ensureCachedSeek(int address, char *cacheMiss)
 {
 	CacheSeekResult_t cacheSeekResult = sc_memoryCache_seek(address);
-	*cacheMiss = !cacheSeekResult.isSuccess;
+	*cacheMiss						  = !cacheSeekResult.isSuccess;
 	if (*cacheMiss)
 	{
 		loadLine(address);
