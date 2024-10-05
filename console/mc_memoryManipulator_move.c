@@ -12,20 +12,22 @@ void mc_memoryManipulator_move(enum Keys key)
 		break;
 	case Key_Down:
 		value += 10;
-		if (value >= MEMORY_SIZE)
+		if (value >= MEMORY_SIZE + 2)
 			value = value - MEMORY_SIZE - 2;
 		break;
 	case Key_Left:
 		value--;
 		if (value < 0)
-			value = MEMORY_SIZE - 1;
+			value = MEMORY_SIZE + 2 - 1;
 		break;
 	case Key_Right:
 		value++;
-		if (value >= MEMORY_SIZE)
+		if (value >= MEMORY_SIZE + 2)
 			value = 0;
 		break;
 	}
-	mc_selectedLabel_set(value);
+	if (value >= MEMORY_SIZE + 2 || value < 0)
+		return;
 	selectedAddressIndex = value;
+	mc_selectedLabel_set(selectedAddressIndex);
 }

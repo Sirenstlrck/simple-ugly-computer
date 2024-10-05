@@ -1,30 +1,35 @@
 #ifndef _MY_CONSOLE_H
 #define _MY_CONSOLE_H
 
+#include <signal.h>
 #include <stdlib.h>
 #include <time.h>
 
 #include "big_chars.h"
+#include "cpu/cpu.h"
 #include "cpu/registers.h"
 #include "memory/config.h"
 #include "read_key.h"
 #include "terminal.h"
+#include "word/def.h"
+#include "word/word.h"
 
 typedef struct Label
 {
 	int x_position;
 	int y_position;
-	char *content;
+	Word_t content;
 	colors background_color;
 	colors foreground_color;
 } Label_t;
 
-static Label_t memoryManipulator[MEMORY_SIZE];
+extern Label_t memoryManipulator[MEMORY_SIZE];
+extern Label_t instractionCounterLabel;
+extern Label_t accumulatorLabel;
+extern Label_t selecionLabel;
 static int selectedAddressIndex = 0;
-static int isImpulseTact = 0;
-static int exitFlag = 0;
 
-void mc_frames_render();
+void mc_staticFrames_render();
 void mc_clearSpace(int x_start, int y_start, int x_end, int y_end);
 
 void mc_memoryManipulator_init();
@@ -32,7 +37,19 @@ void mc_memoryManipulator_render();
 void mc_memoryManipulator_move(enum Keys key);
 
 int mc_label_set(Label_t *label, Label_t newLabel);
-int mc_label_render(Label_t *label);
+int mc_label_render(Label_t label);
 void mc_selectedLabel_set(int address);
+
+void mc_start();
+
+void mc_instructionCounter_init();
+void mc_accumulator_init();
+
+void mc_flags_render();
+void mc_formats_render(Word_t word);
+
+char *mc_wordToOct(Word_t word);
+char *mc_wordToDec(Word_t word);
+char *mc_wordToHex(Word_t word);
 
 #endif // _MY_CONSOLE_H
