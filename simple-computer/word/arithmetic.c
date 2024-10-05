@@ -1,8 +1,10 @@
 #include "word/arithmetic.h"
 #include "word/word.h"
 #include <stdio.h>
+#include <word/def.h>
 ArithmeticResult_t sc_word_addChecked(Word_t lhs, Word_t rhs)
 {
+	ASSERT_2WORDS_BOUNDS(lhs, rhs);
 	ArithmeticResult_t res;
 	int rawResult = lhs + rhs;
 	if (rawResult > MAX_WORD_RAW || rawResult < MIN_WORD_RAW)
@@ -31,12 +33,14 @@ ArithmeticResult_t sc_word_addChecked(Word_t lhs, Word_t rhs)
 
 ArithmeticResult_t sc_word_subChecked(Word_t lhs, Word_t rhs)
 {
+
 	rhs = sc_word_negate(rhs);
 	return sc_word_addChecked(lhs, rhs);
 }
 
 ArithmeticResult_t sc_word_mulChecked(Word_t lhs, Word_t rhs)
 {
+	ASSERT_2WORDS_BOUNDS(lhs, rhs);
 	// hahaha
 	ArithmeticResult_t mulRes;
 	mulRes.result = 0;
@@ -60,12 +64,16 @@ ArithmeticResult_t sc_word_mulChecked(Word_t lhs, Word_t rhs)
 
 DivisionResult_t sc_word_div(Word_t lhs, Word_t rhs)
 {
+	ASSERT_2WORDS_BOUNDS(lhs, rhs);
 	DivisionResult_t divRes;
+
 	if (rhs == 0)
 	{
 		divRes.zeroDiv = 1;
 		return divRes;
 	}
+
+	// all code below should be replaced with c-div
 
 	int resSign = 0;
 	if (sc_word_getSign(lhs))
