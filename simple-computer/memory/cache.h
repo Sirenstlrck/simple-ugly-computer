@@ -3,16 +3,8 @@
 
 #include <time.h>
 
+#include "memory/cache_public.h"
 #include "memory/config.h"
-
-typedef struct CacheLine
-{
-	char isOccupied;
-	char isDirty;
-	int baseAddress;
-	time_t lastAccessTimestamp;
-	int data[CACHE_LINE_SIZE];
-} CacheLine_t;
 
 typedef struct CacheAddressationInfo
 {
@@ -28,8 +20,6 @@ typedef struct CacheSeekResult
 } CacheSeekResult_t;
 
 void sc_memoryCache_init();
-
-CacheLine_t sc_memoryCache_getLine(int idx);
 
 CacheAddressationInfo_t sc_memoryCache_getAddressationInfo(int address);
 

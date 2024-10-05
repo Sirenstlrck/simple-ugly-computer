@@ -8,10 +8,23 @@ CacheLine_t cache[CACHE_SIZE];
 
 void sc_memoryCache_init() { memset(cache, 0, sizeof(cache)); }
 
-CacheLine_t sc_memoryCache_getLine(int idx)
+int sc_memoryCache_getLine(int idx, CacheLine_t *out)
 {
-	assert(idx >= 0 && idx < CACHE_SIZE);
-	return cache[idx];
+	if (idx < 0 && idx >= CACHE_SIZE)
+		return -1;
+	*out = cache[idx];
+	return 0;
+}
+
+int sc_memoryCache_getOccupiedLinesCount()
+{
+	int counter = 0;
+	for (int i = 0, ie = CACHE_SIZE; i < ie; ++i)
+	{
+		if (cache[i].isOccupied)
+			counter++;
+	}
+	return counter;
 }
 
 CacheAddressationInfo_t sc_memoryCache_getAddressationInfo(int address)

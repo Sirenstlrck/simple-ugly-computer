@@ -50,6 +50,10 @@ void checkedArithmetic()
 	opRes = sc_word_subChecked(left, right);
 	assert(opRes.overflow);
 	assert(opRes.result == 16335);
+
+	sc_word_fromInt(MAX_WORD_RAW - 50, &left);
+	sc_word_fromInt(2, &right);
+	opRes = sc_word_mulChecked(left, right);
 }
 
 int main()

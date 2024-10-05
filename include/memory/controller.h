@@ -5,8 +5,6 @@
 
 void sc_memoryController_init();
 
-int sc_memoryController_getOccupiedCacheLinesCount();
-
 typedef struct MemoryAccessResult
 {
 	unsigned char outOfBoundsError;

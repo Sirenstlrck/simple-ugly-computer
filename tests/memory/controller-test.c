@@ -1,19 +1,9 @@
 #include <assert.h>
 #include <stddef.h>
+#include <stdio.h>
 
+#include "memory/cache_public.h"
 #include "memory/controller.h"
-#include "simple-computer/memory/cache.h"
-
-static int countOccupiedCacheLines()
-{
-	int res = 0;
-	for (int i = 0, ie = CACHE_SIZE; i < ie; ++i)
-	{
-		if (sc_memoryCache_getLine(i).isOccupied)
-			res++;
-	}
-	return res;
-}
 
 static void basic()
 {
@@ -26,17 +16,17 @@ static void basic()
 	res = sc_memoryController_get(-1, NULL);
 	assert(res.outOfBoundsError);
 
-	assert(countOccupiedCacheLines() == 0);
+	assert(sc_memoryCache_getOccupiedLinesCount() == 0);
 
 	res = sc_memoryController_set(0, 1);
 	assert(!res.outOfBoundsError);
 
-	assert(countOccupiedCacheLines() == 1);
+	assert(sc_memoryCache_getOccupiedLinesCount() == 1);
 
 	res = sc_memoryController_get(0, &value);
 	assert(value == 1);
 
-	assert(countOccupiedCacheLines() == 1);
+	assert(sc_memoryCache_getOccupiedLinesCount() == 1);
 }
 
 static void hits()
@@ -50,14 +40,14 @@ static void hits()
 		res = sc_memoryController_set(i, i);
 		assert(!res.outOfBoundsError);
 	}
-	assert(countOccupiedCacheLines() == 1);
+	assert(sc_memoryCache_getOccupiedLinesCount() == 1);
 
 	for (int i = 10, ie = 19; i < ie; ++i)
 	{
 		res = sc_memoryController_set(i, i);
 		assert(!res.outOfBoundsError);
 	}
-	assert(countOccupiedCacheLines() == 2);
+	assert(sc_memoryCache_getOccupiedLinesCount() == 2);
 
 	res = sc_memoryController_get(15, &value);
 	assert(res.cost == CACHE_HIT_COST);
@@ -69,21 +59,27 @@ static void hits()
 	res = sc_memoryController_get(35, &value);
 	assert(res.cost == CACHE_MISS_COST);
 
-	assert(countOccupiedCacheLines() == 4);
+	assert(sc_memoryCache_getOccupiedLinesCount() == 4);
 
-	CacheLine_t line = sc_memoryCache_getLine(0);
+	int err;
+	CacheLine_t line;
+	err = sc_memoryCache_getLine(0, &line);
+	assert(!err);
 	assert(line.baseAddress == 0);
 	assert(line.isDirty);
 
-	line = sc_memoryCache_getLine(1);
+	err = sc_memoryCache_getLine(1, &line);
+	assert(!err);
 	assert(line.baseAddress == 10);
 	assert(line.isDirty);
 
-	line = sc_memoryCache_getLine(2);
+	err = sc_memoryCache_getLine(2, &line);
+	assert(!err);
 	assert(line.baseAddress == 20);
 	assert(line.isDirty);
 
-	line = sc_memoryCache_getLine(3);
+	err = sc_memoryCache_getLine(3, &line);
+	assert(!err);
 	assert(line.baseAddress == 30);
 	assert(line.isDirty == 0);
 }
@@ -91,13 +87,18 @@ static void hits()
 static void overrideLines()
 {
 	sc_memoryController_init();
-	int value;
+
+	int a = sc_memoryCache_getOccupiedLinesCount();
 	MemoryAccessResult_t res;
+	int value;
 	CacheLine_t line;
 
 	res = sc_memoryController_set(4, 100);
 	assert(res.cost == CACHE_MISS_COST);
-	assert(sc_memoryCache_getLine(0).isDirty);
+
+	int err = sc_memoryCache_getLine(0, &line);
+	assert(!err);
+	assert(line.isDirty);
 
 	res = sc_memoryController_set(5, 120);
 	assert(res.cost == CACHE_HIT_COST);
@@ -108,12 +109,14 @@ static void overrideLines()
 
 	// sixth load
 	sc_memoryController_get(44, &value);
-	line = sc_memoryCache_getLine(0);
+	err = sc_memoryCache_getLine(0, &line);
+	assert(!err);
 	assert(line.baseAddress == 0);
 	assert(line.isDirty);
 
 	sc_memoryController_get(54, &value);
-	line = sc_memoryCache_getLine(0);
+	err = sc_memoryCache_getLine(0, &line);
+	assert(!err);
 	assert(line.baseAddress == 50);
 	assert(!line.isDirty);
 
