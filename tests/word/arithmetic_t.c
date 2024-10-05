@@ -32,7 +32,6 @@ void basicArithmetic()
 
 	sc_word_fromInt(2, &left);
 	sc_word_fromInt(-3, &right);
-	printf("%d\n", sc_word_mulChecked(left, right).result);
 	assert(sc_word_mulChecked(left, right).result == 2 * -3);
 }
 

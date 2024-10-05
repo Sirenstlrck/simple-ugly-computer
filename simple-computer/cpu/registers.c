@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include "registers.h"
+#include "cpu/registers.h"
 
 static int accumulator;
 static int instructionCounter;

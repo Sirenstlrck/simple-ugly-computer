@@ -27,7 +27,9 @@ enum Keys
 	Key_Empty,
 };
 
-int rk_key_read(enum Keys *);
+int rk_readKey(enum Keys *);
+
+int rk_readValue();
 
 int rk_terminal_save();
 

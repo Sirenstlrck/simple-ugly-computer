@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include "../../simple-computer/cpu/registers.h"
+#include "cpu/registers.h"
 
 void checkZero()
 {

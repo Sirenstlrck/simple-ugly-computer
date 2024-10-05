@@ -18,11 +18,11 @@
 
 size_t bc_strlen(const char *str);
 
-int bc_printBigChar(int x, int y, const char *str);
+int bc_bigChars_print(int x, int y, const char *str);
 
-int bc_drawBox(int x1, int y1, int width, int height, int header_shift,
-			   colors box_fg, colors box_bg, char *header, colors header_fg,
-			   colors header_bg);
+int bc_frame_draw(int x1, int y1, int width, int height, int header_shift,
+				  colors box_fg, colors box_bg, char *header, colors header_fg,
+				  colors header_bg);
 
 int bc_setBigCharPos(int *big, int x, int y, int value);
 

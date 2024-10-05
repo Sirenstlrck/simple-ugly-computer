@@ -29,7 +29,7 @@ const CustomEncoding custom_encoding[] = {
 	{'-', {"░░░░░░ ", "░░░░░░ ", "██████ ", "░░░░░░ ", "░░░░░░ ", "░░░░░░ "}},
 };
 
-int bc_printBigChar(int x, int y, const char *str)
+int bc_bigChars_print(int x, int y, const char *str)
 {
 	if (str == NULL)
 	{
