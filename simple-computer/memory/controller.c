@@ -38,7 +38,7 @@ static void loadLine(int address)
 static CacheSeekResult_t ensureCachedSeek(int address, char *cacheMiss)
 {
 	CacheSeekResult_t cacheSeekResult = sc_memoryCache_seek(address);
-	*cacheMiss = !cacheSeekResult.isSuccess;
+	*cacheMiss						  = !cacheSeekResult.isSuccess;
 	if (*cacheMiss)
 	{
 		loadLine(address);
@@ -77,7 +77,19 @@ void sc_memoryController_init()
 	sc_memoryCache_init();
 }
 
-MemoryAccessResult_t sc_memoryController_get(int address, int *out)
+void sc_memoryController_flushCache()
+{
+	for (int i = 0, ie = CACHE_SIZE; i < ie; ++i)
+	{
+		CacheLine_t line;
+		sc_memoryCache_getLine(i, &line);
+		if (line.isDirty)
+			dumpLine(line);
+	}
+	sc_memoryCache_init();
+}
+
+MemoryAccessResult_t sc_memoryController_get(int address, Word_t *out)
 {
 	SeekResult_t seekResult = seek(address);
 	if (seekResult.accessResult.outOfBoundsError)
@@ -88,7 +100,7 @@ MemoryAccessResult_t sc_memoryController_get(int address, int *out)
 	return seekResult.accessResult;
 }
 
-MemoryAccessResult_t sc_memoryController_set(int address, int value)
+MemoryAccessResult_t sc_memoryController_set(int address, Word_t value)
 {
 	SeekResult_t seekResult = seek(address);
 	if (seekResult.accessResult.outOfBoundsError)

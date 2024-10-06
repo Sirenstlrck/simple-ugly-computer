@@ -14,7 +14,7 @@ int rk_terminalMode_set(int isCannonicalMode, int inputTimeoutValue,
 	{
 		newTermios.c_lflag |= ICANON;
 		newTermios.c_cc[VTIME] = 1;
-		newTermios.c_cc[VMIN] = 1;
+		newTermios.c_cc[VMIN]  = 1;
 		newTermios.c_lflag |= ISIG;
 		newTermios.c_lflag |= ECHO;
 	}
@@ -22,7 +22,7 @@ int rk_terminalMode_set(int isCannonicalMode, int inputTimeoutValue,
 	{
 		newTermios.c_lflag &= ~(ICANON);
 		newTermios.c_cc[VTIME] = inputTimeoutValue;
-		newTermios.c_cc[VMIN] = minChars;
+		newTermios.c_cc[VMIN]  = minChars;
 	}
 
 	if (isEchoEnabled == 0)

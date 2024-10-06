@@ -56,8 +56,8 @@ int bc_bigChars_print(int x, int y, const char *str)
 		else if (!isdigit(str[i]))
 		{
 			current_encoding = &custom_encoding[toupper(str[i]) - 'A'];
-			char str1[2] = {current_encoding->symbol, '\0'};
-			char str2[2] = {toupper(str[i]), '\0'};
+			char str1[2]	 = {current_encoding->symbol, '\0'};
+			char str2[2]	 = {toupper(str[i]), '\0'};
 			if (strcmp(str1, str2) != 0)
 			{
 				return -1;

@@ -23,6 +23,7 @@ void sc_reg_setAccumulator(int value) { accumulator = value; }
 
 int sc_reg_getInstructionCounter() { return instructionCounter; }
 void sc_reg_setInstructionCounter(int value) { instructionCounter = value; }
+void sc_reg_incInstructionCounter() { instructionCounter++; }
 
 int sc_reg_getDowntimeCounter() { return downtimeCounter; }
 
@@ -32,14 +33,12 @@ int sc_reg_downtimeCounterAdd(int value)
 	return 0;
 }
 
-int sc_reg_downtimeCounterDec()
+void sc_reg_downtimeCounterDec()
 {
 	if (downtimeCounter != 0)
 	{
 		downtimeCounter--;
-		return 0;
 	}
-	return -1;
 }
 
 int sc_reg_downtimeCounterIsZero() { return downtimeCounter == 0; }
@@ -65,10 +64,10 @@ int sc_reg_isFlagSetted(int flag)
 
 void sc_reg_reset()
 {
-	accumulator = 0;
+	accumulator		   = 0;
 	instructionCounter = 0;
-	downtimeCounter = 0;
-	flags = 0;
-	int err = sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
+	downtimeCounter	   = 0;
+	flags			   = 0;
+	int err			   = sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
 	assert(!err);
 }

@@ -49,7 +49,7 @@ void validate()
 {
 	for (int i = 0, ie = MEMORY_SIZE; i < ie; ++i)
 	{
-		int value = 0;
+		int value  = 0;
 		int getRes = sc_memory_get(i, &value);
 		if (getRes == -1)
 		{

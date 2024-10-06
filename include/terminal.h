@@ -18,7 +18,7 @@ typedef enum
 	White
 } colors;
 
-#define MIN_SCREEN_WITDH 128
+#define MIN_SCREEN_WITDH  128
 #define MIN_SCREEN_HEIGHT 36
 
 int mt_screen_clear();

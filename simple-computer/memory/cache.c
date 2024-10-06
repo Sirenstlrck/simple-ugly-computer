@@ -30,7 +30,7 @@ int sc_memoryCache_getOccupiedLinesCount()
 CacheAddressationInfo_t sc_memoryCache_getAddressationInfo(int address)
 {
 	CacheAddressationInfo_t result;
-	result.base = (address / CACHE_LINE_SIZE) * CACHE_LINE_SIZE;
+	result.base	  = (address / CACHE_LINE_SIZE) * CACHE_LINE_SIZE;
 	result.offset = address - result.base;
 	return result;
 }
@@ -38,9 +38,9 @@ CacheAddressationInfo_t sc_memoryCache_getAddressationInfo(int address)
 CacheSeekResult_t sc_memoryCache_seek(int address)
 {
 	CacheSeekResult_t result;
-	result.isSuccess = 0;
+	result.isSuccess		= 0;
 	result.addressationInfo = sc_memoryCache_getAddressationInfo(address);
-	result.cacheLineIdx = -1;
+	result.cacheLineIdx		= -1;
 
 	for (int i = 0, ie = CACHE_SIZE; i < ie; ++i)
 	{
@@ -50,7 +50,7 @@ CacheSeekResult_t sc_memoryCache_seek(int address)
 
 		if (result.addressationInfo.base == line.baseAddress)
 		{
-			result.isSuccess = 1;
+			result.isSuccess	= 1;
 			result.cacheLineIdx = i;
 			break;
 		}
@@ -62,7 +62,7 @@ int sc_memoryCache_get(CacheSeekResult_t seekResult)
 {
 	assert(seekResult.isSuccess);
 
-	CacheLine_t line = cache[seekResult.cacheLineIdx];
+	CacheLine_t line		 = cache[seekResult.cacheLineIdx];
 	line.lastAccessTimestamp = time(NULL);
 	return line.data[seekResult.addressationInfo.offset];
 }
@@ -71,10 +71,10 @@ void sc_memoryCache_set(CacheSeekResult_t seekResult, int value)
 {
 	assert(seekResult.isSuccess);
 
-	CacheLine_t *line = &cache[seekResult.cacheLineIdx];
+	CacheLine_t *line		  = &cache[seekResult.cacheLineIdx];
 	line->lastAccessTimestamp = time(NULL);
 	line->data[seekResult.addressationInfo.offset] = value;
-	line->isDirty = 1;
+	line->isDirty								   = 1;
 }
 
 void dumpLines() {}
@@ -83,8 +83,8 @@ void dumpLines() {}
 // 'isDirty' setted in 1 if it was modified and memory should be updated.
 CacheLine_t sc_memoryCache_addLine(CacheLine_t line)
 {
-	line.isOccupied = 1;
-	line.isDirty = 0;
+	line.isOccupied			 = 1;
+	line.isDirty			 = 0;
 	line.lastAccessTimestamp = time(NULL);
 
 	CacheLine_t *toOverride = &cache[0];
@@ -103,6 +103,6 @@ CacheLine_t sc_memoryCache_addLine(CacheLine_t line)
 	}
 
 	CacheLine_t stored = *toOverride;
-	*toOverride = line;
+	*toOverride		   = line;
 	return stored;
 }

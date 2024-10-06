@@ -20,7 +20,7 @@ int sc_word_isRawValueValid(int value)
 {
 	int sign = value < 0;
 
-	int nval = -value;
+	int nval   = -value;
 	int nbound = MAX_WORD_RAW + 1;
 	if (sign && ((-value) > (MAX_WORD_RAW + 1)))
 		return 0;
@@ -109,8 +109,8 @@ int sc_word_maybeCommand(Word_t word)
 int sc_word_commandEncode(int sign, int command, int operand, Word_t *out)
 {
 	int result = 0;
-	int err = 0;
-	err = sc_word_setSign(&result, sign);
+	int err	   = 0;
+	err		   = sc_word_setSign(&result, sign);
 	if (err)
 		return err;
 	err = sc_word_setCommand(&result, command);
@@ -128,7 +128,7 @@ int sc_word_commandDecode(Word_t word, int *sign, int *command, int *operand)
 	if (word > MAX_WORD)
 		return -1;
 
-	*sign = sc_word_getSign(word);
+	*sign	 = sc_word_getSign(word);
 	*command = sc_word_getCommand(word);
 	*operand = sc_word_getOperand(word);
 

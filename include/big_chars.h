@@ -10,11 +10,11 @@
 
 #include "terminal.h"
 
-#define EN_GRAPHIC write(1, "\E(0", 4)
-#define DIS_GRAPHIC write(1, "\E(B", 4)
+#define EN_GRAPHIC			   write(1, "\E(0", 4)
+#define DIS_GRAPHIC			   write(1, "\E(B", 4)
 
 #define BIG_CHAR_LETTER_HEIGHT 6
-#define BIG_CHAR_LETTER_WIDTH 19
+#define BIG_CHAR_LETTER_WIDTH  19
 
 size_t bc_strlen(const char *str);
 

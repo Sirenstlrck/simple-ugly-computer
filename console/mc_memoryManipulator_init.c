@@ -16,7 +16,7 @@ void mc_memoryManipulator_init()
 			y_point++;
 		}
 		x_point += 6;
-		Label_t label = {x_point, y_point, (Word_t)value, Black, White};
+		Label_t label		 = {x_point, y_point, (Word_t)value, Black, White};
 		memoryManipulator[i] = label;
 	}
 	selecionLabel = memoryManipulator[selectedAddressIndex + 1];
