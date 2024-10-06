@@ -26,7 +26,10 @@ int main()
 
 	rk_terminal_save();
 	sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
-	mc_frames_render();
+
+	mc_staticFrames_render();
+
+	mc_start();
 
 	rk_terminal_restore();
 	mt_cursorVisiblity_set(1);

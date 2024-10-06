@@ -1,6 +1,73 @@
 #include "cpu/registers.h"
 #include "read_key.h"
-#include <string.h>
+#include "terminal.h"
+
+int rk_readValue(int *value, int timeout)
+{
+	fd_set readfds;
+	struct timeval tv;
+	int ready;
+	char hex_value[10] = {'\0'};
+
+	tv.tv_sec  = timeout;
+	tv.tv_usec = 0;
+
+	FD_ZERO(&readfds);
+	FD_SET(STDIN_FILENO, &readfds);
+
+	ready = select(STDIN_FILENO + 1, &readfds, NULL, NULL, &tv);
+
+	if (ready < 0)
+	{
+		return -1;
+	}
+	else if (ready == 0)
+	{
+		return 0;
+	}
+	else
+	{
+		if (FD_ISSET(STDIN_FILENO, &readfds))
+		{
+			int counter = 0;
+			while (counter < 5)
+			{
+				char ch;
+				if (read(STDIN_FILENO, &ch, 1) == 1)
+				{
+					ch = tolower(ch);
+					if (counter == 0)
+					{
+						if (ch != '-' && ch != '+')
+						{
+							return 0;
+						}
+					}
+					else
+					{
+						if ((ch < '0' || ch > '9') && (ch < 'a' || ch > 'f'))
+						{
+							return 0;
+						}
+					}
+					hex_value[counter++] = ch;
+				}
+			}
+			hex_value[counter] = '\0';
+			int sign		   = hex_value[0] == '-' ? 1 : 0;
+			int command, operand;
+			sscanf(hex_value + 1, "%02x", &command);
+			sscanf(hex_value + 3, "%02x", &operand);
+			//+1234
+			if (sc_word_commandEncode(sign, command, operand, value) == -1)
+			{
+				return 0;
+			}
+			return 1;
+		}
+		return -1;
+	}
+}
 
 int rk_readKey(enum Keys *key)
 {
@@ -20,6 +87,7 @@ int rk_readKey(enum Keys *key)
 	}
 
 	read(fileno(stdin), buffer, sizeof(buffer));
+
 	if (buffer[0] == '\E')
 	{
 		switch (buffer[1])
@@ -58,7 +126,7 @@ int rk_readKey(enum Keys *key)
 			break;
 		}
 	}
-	else if (buffer[0] == '\n' && buffer[1] == '\0')
+	else if (buffer[0] == '\r' && buffer[1] == '\0')
 	{
 		*key = Key_Enter;
 	}
@@ -87,4 +155,5 @@ int rk_readKey(enum Keys *key)
 		}
 	}
 	rk_terminal_restore();
+	return 0;
 }

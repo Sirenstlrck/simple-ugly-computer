@@ -5,7 +5,7 @@
 
 #define WORD_BITS_COUNT	 15
 
-#define SIGN_OFFSET		 (WORD_BITS_COUNT) - 1
+#define SIGN_OFFSET		 14
 #define COMMAND_OFFSET	 7
 #define OPERAND_OFFSET	 0
 
