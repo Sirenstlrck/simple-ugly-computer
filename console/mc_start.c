@@ -1,9 +1,52 @@
 #include "../simple-computer/memory/memory.h"
 #include "console.h"
+#include "cpu/clock_generator.h"
+#include "memory/cache_public.h"
+
+void mc_renderCache()
+{
+	int x = 2;
+	int y = 18;
+	char buffer[256];
+	mt_cursorPosition_set(x, y);
+	CacheLine_t cacheLine;
+	for (int i = 0; i < CACHE_SIZE; ++i)
+	{
+		sc_memoryCache_getLine(i, &cacheLine);
+		sprintf(buffer, "%d: ", cacheLine.baseAddress / 10);
+		write(STDOUT_FILENO, buffer, strlen(buffer));
+		mt_cursorPosition_set(x += 4, y);
+		for (int j = 0; j < CACHE_LINE_SIZE; ++j)
+		{
+			char *str = mc_wordToHex(cacheLine.data[j]);
+			write(STDOUT_FILENO, str, strlen(str));
+			mt_cursorPosition_set(x += 6, y);
+		}
+		mt_cursorPosition_set(x = 2, y++);
+	}
+}
+
+void mc_updateRender()
+{
+	mc_memoryManipulator_init();
+	mc_memoryManipulator_render();
+
+	mc_accumulator_init();
+	mc_instructionCounter_init();
+	selectedAddressIndex = sc_reg_getInstructionCounter();
+
+	mc_flags_render();
+	mc_selectedLabel_set(selectedAddressIndex);
+	mt_cursorPosition_set(71, 21);
+	char buffer[256];
+	sprintf(buffer, "%d", sc_clockGenerator_getTicksElapsed());
+	write(STDOUT_FILENO, buffer, strlen(buffer));
+	mc_renderCache();
+}
 
 void signal_handle(int signum)
 {
-	sc_cpu_reset();
+	sc_intHandler_reset();
 	mc_memoryManipulator_init();
 	mc_memoryManipulator_render();
 
@@ -11,13 +54,20 @@ void signal_handle(int signum)
 	mc_accumulator_init();
 	mc_flags_render();
 
+	mc_renderCache();
+
 	mc_selectedLabel_set(0);
+	mc_updateRender();
 }
 
 void mc_start()
 {
 	int exitFlag = 0;
 	signal(SIGUSR1, signal_handle);
+
+	sc_clockGenerator_init();
+	sc_clockGenerator_setTickHook(mc_updateRender);
+	mc_updateRender();
 
 	mc_memoryManipulator_move(Key_Down);
 	mc_memoryManipulator_move(Key_Up);
@@ -133,16 +183,19 @@ void mc_start()
 				if (key == Key_T)
 				{
 					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 0);
-					raise(SIGALRM);
+					sc_clockGenerator_tick();
 					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
+					mc_updateRender();
 				}
 			}
 			if (key == Key_Esc)
 				exitFlag = 1;
 			if (key == Key_R)
 			{
-				if (!sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG))
+				if (sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG))
 				{
+					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 0);
+					sc_clockGenerator_run();
 				}
 				else
 				{

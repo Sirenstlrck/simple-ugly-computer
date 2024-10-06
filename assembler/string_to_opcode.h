@@ -3,10 +3,7 @@
 
 #include "cpu/operation.h"
 
-#define SAT_OP(op)                                                             \
-	{                                                                          \
-		op, #op                                                                \
-	}
+#define SAT_OP(op) {op, #op}
 
 typedef struct
 {
