@@ -110,3 +110,13 @@ MemoryAccessResult_t sc_memoryController_set(int address, Word_t value)
 
 	return seekResult.accessResult;
 }
+
+int sc_memoryController_getDirect(int address, Word_t *out)
+{
+	return sc_memory_get(address, out);
+}
+
+int sc_memoryController_setDirect(int address, Word_t value)
+{
+	return sc_memory_set(address, value);
+}

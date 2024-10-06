@@ -28,6 +28,8 @@ typedef int Word_t;
 	}
 
 #define ASSERT_2WORDS_BOUNDS(word1, word2)                                     \
-	{ASSERT_WORD_BOUNDS(word1) ASSERT_WORD_BOUNDS(word2)}
+	{                                                                          \
+		ASSERT_WORD_BOUNDS(word1) ASSERT_WORD_BOUNDS(word2)                    \
+	}
 
 #endif

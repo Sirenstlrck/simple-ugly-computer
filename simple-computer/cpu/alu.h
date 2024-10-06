@@ -4,6 +4,7 @@
 #include <assert.h>
 
 #include "cpu/operation.h"
+#include "memory_driver.h"
 #include "state.h"
 
 static void sc_alu_start(int op, int operand)
@@ -17,7 +18,19 @@ static void sc_alu_start(int op, int operand)
 	}
 }
 
-static void sc_alu_continue(int op, int operand) {}
+static void sc_alu_continue(int op, int operand)
+{
+	Word_t res;
+	switch (op)
+	{
+	case Add:
+		tickData.loadedData;
+		break;
+
+	default:
+		break;
+	}
+}
 
 static void sc_alu_handle(int op, int operand)
 {

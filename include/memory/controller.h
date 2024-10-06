@@ -14,6 +14,11 @@ typedef struct MemoryAccessResult
 
 void sc_memoryController_flushCache();
 
+// for ui :)
+int sc_memoryController_getDirect(int address, Word_t *out);
+int sc_memoryController_setDirect(int address, Word_t out);
+//
+
 MemoryAccessResult_t sc_memoryController_get(int address, Word_t *out);
 MemoryAccessResult_t sc_memoryController_set(int address, Word_t value);
 
