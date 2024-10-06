@@ -25,7 +25,7 @@ static void loadData(int address)
 {
 	Word_t data;
 	MemoryAccessResult_t accessResult = sc_memoryController_get(address, &data);
-	sc_reg_downtimeCounterAdd(accessResult.cost);
+	sc_reg_downtimeCounterAdd(accessResult.cost - 1);
 	tickData.loadedData = data;
 	tickData.state		= es_pendingData;
 }
@@ -33,6 +33,6 @@ static void loadData(int address)
 static void storeData(int address, Word_t data)
 {
 	MemoryAccessResult_t accessResult = sc_memoryController_set(address, data);
-	sc_reg_downtimeCounterAdd(accessResult.cost);
+	sc_reg_downtimeCounterAdd(accessResult.cost - 1);
 }
 #endif
