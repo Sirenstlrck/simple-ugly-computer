@@ -9,3 +9,4 @@ obj
 *.a
 *.bin
 main
+bin/
