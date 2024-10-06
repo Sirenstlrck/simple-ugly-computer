@@ -12,10 +12,11 @@ void sc_reg_setAccumulator(int value);
 
 int sc_reg_getInstructionCounter();
 void sc_reg_setInstructionCounter(int value);
+void sc_reg_incInstructionCounter();
 
 int sc_reg_getDowntimeCounter();
 int sc_reg_downtimeCounterAdd(int value);
-int sc_reg_downtimeCounterDec();
+void sc_reg_downtimeCounterDec();
 int sc_reg_downtimeCounterIsZero();
 
 int sc_reg_getFlags();
