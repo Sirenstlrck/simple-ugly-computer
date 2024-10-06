@@ -16,7 +16,7 @@ void mc_updateRender()
 
 	mt_cursorPosition_set(71, 21);
 	char buffer[256];
-	sprintf(buffer, "%d", sc_clockGenerator_getTicksElapsed());
+	sprintf(buffer, "%05d", sc_clockGenerator_getTicksElapsed());
 	write(STDOUT_FILENO, buffer, strlen(buffer));
 	mc_cache_render();
 }

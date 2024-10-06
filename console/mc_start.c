@@ -18,10 +18,14 @@ void signal_handle(int signum)
 	mc_updateRender();
 }
 
+void input_handle(int signum) {}
+
 void mc_start()
 {
 	int exitFlag = 0;
+
 	signal(SIGUSR1, signal_handle);
+	signal(SIGUSR2, input_handle);
 
 	mc_updateRender();
 
@@ -32,6 +36,7 @@ void mc_start()
 		{
 			if (sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG))
 			{
+				sc_clockGenerator_stop();
 				if (key >= Key_Up && key <= Key_Right)
 					mc_memoryManipulator_move(key);
 				if (key == Key_I)
@@ -155,6 +160,10 @@ void mc_start()
 				}
 			}
 		}
+		if (sc_intHandler_isPendingInput())
+			mc_inputRequest_render();
+		if (sc_intHandler_wantsToWriteCpuInfo())
+			mc_cpuInfo_render();
 		mc_updateRender();
 	}
 }

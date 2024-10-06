@@ -47,6 +47,8 @@ void mc_accumulator_render();
 void mc_flags_render();
 void mc_cache_render();
 void mc_formats_render(Word_t word);
+void mc_inputRequest_render();
+void mc_cpuInfo_render();
 
 char *mc_wordToOct(Word_t word);
 char *mc_wordToDec(Word_t word);
