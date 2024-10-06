@@ -33,11 +33,5 @@ void mc_staticFrames_render()
 	mt_cursorPosition_set(82, 28);
 	write(STDOUT_FILENO, "F6 - ICounter", 14);
 
-	mc_memoryManipulator_init();
-	mc_memoryManipulator_render();
-
-	mc_instructionCounter_init();
-	mc_accumulator_init();
-
-	mc_flags_render();
+	mc_updateRender();
 }

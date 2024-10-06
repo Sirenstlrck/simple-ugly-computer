@@ -1,9 +1,8 @@
 #include "console.h"
 
-void mc_instructionCounter_init()
+void mc_instructionCounter_render()
 {
 	Label_t label = {103, 18, (Word_t)sc_reg_getInstructionCounter(), Black,
 					 White};
-	instractionCounterLabel = label;
-	mc_label_render(instractionCounterLabel);
+	mc_label_render(label);
 }
