@@ -60,7 +60,7 @@ int ensureScanInt(char *str)
 {
 	int addr;
 	errno		 = 0;
-	int scanfRes = sscanf(str, "%x", &addr);
+	int scanfRes = sscanf(str, "%d", &addr);
 	if (scanfRes != 1)
 	{
 		if (errno != 0)
@@ -158,7 +158,6 @@ ParseResult_t parse(FILE *f)
 					break;
 				}
 			}
-			printf("%d: %s %x\n", addr, tokv[1], opnd);
 		}
 
 		for (int i = 0; tokv[i] && i < sizeof(tokv) / sizeof(char *); ++i)
@@ -192,8 +191,6 @@ int main(int argc, char **argv)
 
 	FILE *src = ensureFOpen(argv[1], "r");
 	FILE *dst = ensureFOpen(argv[2], "w");
-
-	char buff[512] = {"\0"};
 
 	ParseResult_t res = parse(src);
 

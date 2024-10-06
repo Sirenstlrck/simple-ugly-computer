@@ -7,25 +7,96 @@
 #include "memory_driver.h"
 #include "state.h"
 
+static void setJumpIf(int condition, int address)
+{
+	if (condition)
+	{
+		tickData.jump.requested = 1;
+		tickData.jump.address	= address;
+	}
+
+	// just want to write less, maybe this shoudn't be here :p
+	tickData.state = es_opHandled;
+}
+
 static void sc_cu_start(int op, int operand)
 {
-	switch (op)
-	{
-	case Load:
-		loadData(operand);
-		break;
-	case Store:
-		storeData(operand, sc_reg_getAccumulator());
-		tickData.state = es_opHandled;
-		break;
+	if (Load || Mova)
+		switch (op)
+		{
+		case Load:
+			loadData(operand);
+			break;
+		case Store:
+			storeData(operand, sc_reg_getAccumulator());
+			tickData.state = es_opHandled;
+			break;
 
-	case Halt:
-		tickData.state = es_halt;
-		break;
-	default:
-		assert(0);
-		break;
-	}
+		case Halt:
+			tickData.state = es_halt;
+			break;
+
+#pragma region Jumps
+		case Jump:
+			setJumpIf(1, operand);
+			break;
+
+		case Jneg:
+
+			setJumpIf(									  //
+				sc_word_getSign(sc_reg_getAccumulator()), //
+				operand									  //
+			);
+			break;
+
+		case Jz:
+			setJumpIf(						  //
+				sc_reg_getAccumulator() == 0, //
+				operand						  //
+			);
+			break;
+
+		case Jns:
+			setJumpIf(									   //
+				!sc_word_getSign(sc_reg_getAccumulator()), //
+				operand									   //
+			);
+			break;
+
+		case Jc:
+			setJumpIf(								//
+				sc_reg_isFlagSetted(OVERFLOW_FLAG), //
+				operand								//
+			);
+			break;
+
+		case Jnc:
+			setJumpIf(								 //
+				!sc_reg_isFlagSetted(OVERFLOW_FLAG), //
+				operand								 //
+			);
+			break;
+
+		case Jp:
+			setJumpIf(							  //
+				sc_reg_getAccumulator() % 2 == 0, // I hope i got it
+				operand							  //
+			);
+			break;
+
+		case Jnp:
+			setJumpIf(							  //
+				sc_reg_getAccumulator() % 2 != 0, //
+				operand							  //
+			);
+
+			break;
+#pragma endregion Jumps
+
+		default:
+			assert(0);
+			break;
+		}
 }
 
 static void sc_cu_continue(int op, int operand)

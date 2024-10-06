@@ -7,18 +7,26 @@
 #include "word/def.h"
 #include "word/word.h"
 
-#include "cpu/int_handler.h"
-
+// cpu features
 #include "alu.h"
 #include "cu.h"
-
-#include "state.h"
-
+#include "int_handler_io.h"
 #include "memory_driver.h"
+#include "state.h"
+// cpu features
 
-int sc_intHandler_wantsToWrite() {}
+#include "cpu/int_handler.h"
 
-int sc_intHandlet_getWriteData() {}
+int sc_intHandler_wantsToWriteCpuInfo()
+{
+	return tickData.state == es_wantsToWrite;
+}
+
+void sc_intHandler_reportCpuInfoWrited() { tickData.state = es_shouldLoadOp; }
+
+int sc_intHandler_wantsToWrite() { return tickData.state == es_wantsToWrite; }
+
+int sc_intHandlet_getWriteData() { return tickData.loadedData; }
 
 int sc_intHandler_isPendingInput() { tickData.state == es_pendingInput; }
 
@@ -44,6 +52,7 @@ static void dispatch()
 	{
 		sc_reg_setFlag(WRONG_COMMAND_FLAG, 1);
 		sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
+		tickData.state = es_halt;
 	}
 	else if (sc_operation_isAlu(op))
 	{
@@ -55,8 +64,7 @@ static void dispatch()
 	}
 	else if (sc_operation_isIO(op))
 	{
-		fprintf(stderr, "IO device is not supported. Command: %x\n", op);
-		abort();
+		sc_intHandler_io_handle(op, operand);
 	}
 	else if (op == Nop)
 	{
@@ -72,8 +80,12 @@ static void dispatch()
 
 void sc_intHandler_tick()
 {
-	if (sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG) ||
-		tickData.state == es_pendingInput)
+	tickData.jump.requested = 0;
+	tickData.jump.address	= 0;
+	if (sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG) //
+		|| tickData.state == es_pendingInput	 //
+		|| tickData.state == es_wantsToWrite	 //
+		|| tickData.state == es_wantsToWriteCpuInfo)
 		return;
 
 	if (sc_reg_getDowntimeCounter() > 0)
@@ -104,7 +116,15 @@ void sc_intHandler_tick()
 
 	if (tickData.state == es_opHandled)
 	{
-		sc_reg_incInstructionCounter();
+		if (tickData.jump.requested)
+		{
+			sc_reg_setInstructionCounter(tickData.jump.address);
+		}
+		else
+		{
+			sc_reg_incInstructionCounter();
+		}
+
 		tickData.state = es_shouldLoadOp;
 	}
 

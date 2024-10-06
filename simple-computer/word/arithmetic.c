@@ -5,8 +5,8 @@
 ArithmeticResult_t sc_word_addChecked(Word_t lhs, Word_t rhs)
 {
 	ASSERT_2WORDS_BOUNDS(lhs, rhs);
-	ArithmeticResult_t res;
-	int rawResult = lhs + rhs;
+	ArithmeticResult_t res = {0, 0};
+	int rawResult		   = lhs + rhs;
 	if (rawResult > MAX_WORD_RAW || rawResult < MIN_WORD_RAW)
 	{
 		res.overflow = 1;
