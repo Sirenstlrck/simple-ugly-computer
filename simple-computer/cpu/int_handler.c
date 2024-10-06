@@ -16,6 +16,10 @@
 
 #include "memory_driver.h"
 
+int sc_intHandler_wantsToWrite() {}
+
+int sc_intHandlet_getWriteData() {}
+
 int sc_intHandler_isPendingInput() { tickData.state == es_pendingInput; }
 
 void sc_intHandler_input(Word_t input)

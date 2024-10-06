@@ -57,13 +57,13 @@ void mc_start()
 						case 128:
 							sc_reg_setAccumulator(newValue);
 							mc_accumulator_init();
-							selecionLabel = accumulatorLabel;
+							selecionLabel		 = accumulatorLabel;
 							selectedAddressIndex = 128;
 							break;
 						case 129:
 							sc_reg_setInstructionCounter(newValue);
 							mc_instructionCounter_init();
-							selecionLabel = instractionCounterLabel;
+							selecionLabel		 = instractionCounterLabel;
 							selectedAddressIndex = 129;
 							break;
 						}
