@@ -4,12 +4,12 @@ void mc_staticFrames_render()
 {
 	mt_screen_clear();
 	mt_cursorVisiblity_set(0);
-	bc_frame_draw(1, 1, 118, 35, 2, White, Black, "Simple Computer", Green,
+	bc_frame_draw(1, 1, 118, 30, 2, White, Black, "Simple Computer", Green,
 				  White);
 	bc_frame_draw(80, 2, 37, 11, 2, White, Black, " Edit cell ", Green, Black);
 	bc_frame_draw(3, 2, 65, 15, 27, White, Black, "  RAM  ", Red, Black);
 
-	bc_frame_draw(3, 17, 65, 6, 27, White, Black, "  Cache  ", Red, Black);
+	bc_frame_draw(1, 17, 66, 7, 27, White, Black, "  Cache  ", Red, Black);
 	bc_frame_draw(69, 2, 10, 11, 2, White, Black, " Flags ", Red, Black);
 	bc_frame_draw(69, 13, 48, 4, 2, White, Black, " Format ", Green, Black);
 
