@@ -52,7 +52,7 @@ void sc_clockGenerator_run()
 
 	struct itimerval nval, oval;
 	nval.it_interval.tv_sec	 = 0;
-	nval.it_interval.tv_usec = 500000;
+	nval.it_interval.tv_usec = TICK_USEC;
 	nval.it_value.tv_sec	 = 0;
 	nval.it_value.tv_usec	 = 1;
 	if (setitimer(ITIMER_REAL, &nval, NULL) == -1)
