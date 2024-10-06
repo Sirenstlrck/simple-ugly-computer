@@ -10,6 +10,7 @@ enum EvaluationState
 	es_pendingData,
 	es_halt,
 	es_opHandled,
+	es_pendingInput,
 };
 
 struct EvaluationStateData
@@ -17,6 +18,7 @@ struct EvaluationStateData
 	enum EvaluationState state;
 	Word_t loadedOp;
 	Word_t loadedData;
+	Word_t inputedData;
 };
 
 extern struct EvaluationStateData tickData;

@@ -16,6 +16,15 @@
 
 #include "memory_driver.h"
 
+int sc_intHandler_isPendingInput() { tickData.state == es_pendingInput; }
+
+void sc_intHandler_input(Word_t input)
+{
+	assert(tickData.state == es_pendingInput);
+	tickData.state		 = es_working;
+	tickData.inputedData = input;
+}
+
 void sc_intHandler_reset()
 {
 	sc_reg_reset();
@@ -59,7 +68,8 @@ static void dispatch()
 
 void sc_intHandler_tick()
 {
-	if (sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG))
+	if (sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG) ||
+		tickData.state == es_pendingInput)
 		return;
 
 	if (sc_reg_getDowntimeCounter() > 0)

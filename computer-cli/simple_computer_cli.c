@@ -9,9 +9,9 @@
 #include "simple-computer/cpu/state.h"
 #include "simple-computer/memory/memory.h"
 
-int exitRequired = 0;
+int exitRequested = 0;
 
-void saveAndExit() { exitRequired = 1; }
+void requestExit() { exitRequested = 1; }
 
 void disasm()
 {
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	signal(SIGINT, saveAndExit);
+	signal(SIGINT, requestExit);
 
 	sc_intHandler_reset();
 	sc_memory_load(argv[1]);
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 
 	sc_clockGenerator_run();
 
-	while (!sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG) && !exitRequired)
+	while (!sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG) && !exitRequested)
 	{
 		pause();
 	}
