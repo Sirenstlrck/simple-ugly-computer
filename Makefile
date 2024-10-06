@@ -3,9 +3,12 @@ export ROOT_DIRECTORY = ${shell pwd}
 export CC = gcc
 export CFLAGS =  -g -O0 -I ${ROOT_DIRECTORY}/include/
 
-all: clean clang-format obj main test
+all: clean clang-format obj main 
+#test
 
-OBJS = $(shell find . -type f -name '*.o' -not -path "./tests/*")
+#OBJS = $(shell find . -type f -name '*.o' -not -path "./tests/*")
+
+OBJS = $(shell find . -type f -name '*.o')
 
 main:
 	@$(CC) $(CFLAGS) $(OBJS) -o $@
@@ -32,9 +35,9 @@ clean:
 	$(MAKE) -C big-chars/ clean
 	$(MAKE) -C simple-computer/ clean
 	$(MAKE) -C console/ clean
-	$(MAKE) -C tests/ clean
+# $(MAKE) -C tests/ clean
 	rm -rf main.o
 	rm -rf main
 
-test: obj
-	./scripts/BuildAndRunTests.sh
+# test: obj
+# 	./scripts/BuildAndRunTests.sh

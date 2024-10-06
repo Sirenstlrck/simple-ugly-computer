@@ -74,8 +74,12 @@ int sc_word_getOperand(Word_t word)
 
 int sc_word_setOperand(Word_t *word, int value)
 {
-	if (value < 0 || value > MAX_OPERAND_SIZE)
+	if (value < 0)
 		return -1;
+	if (value > MAX_OPERAND_SIZE)
+	{
+		value = MAX_OPERAND_SIZE;
+	}
 	sc_word_setBits(word, value, OPERAND_OFFSET, OPERAND_MASK);
 	return 0;
 }

@@ -8,8 +8,22 @@ void mc_formats_render(Word_t word)
 	mt_cursorPosition_set(71, 14);
 	write(STDOUT_FILENO, buffer, strlen(buffer));
 	sprintf(buffer, "b: %0.15b", (int)word);
+
+	char tempBuffer[22];
+	tempBuffer[21] = '\0';
+	for (int i = 0, j = i; i < 21; ++i) // 0 0000000 0000000
+	{
+		if (i == 4 || i == 12)
+		{
+			tempBuffer[i] = ' ';
+			continue;
+		}
+		tempBuffer[i] = buffer[j];
+		++j;
+	}
+
 	mt_cursorPosition_set(71, 15);
-	write(STDOUT_FILENO, buffer, strlen(buffer));
+	write(STDOUT_FILENO, tempBuffer, 22);
 }
 
 void mc_selectedLabel_set(int address)
