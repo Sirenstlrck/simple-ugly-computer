@@ -22,7 +22,7 @@ int sc_intHandlet_getWriteData() {}
 
 int sc_intHandler_isPendingInput() { tickData.state == es_pendingInput; }
 
-void sc_intHandler_input(Word_t input)
+void sc_intHandler_writeInput(Word_t input)
 {
 	assert(tickData.state == es_pendingInput);
 	tickData.state		 = es_working;
@@ -65,8 +65,8 @@ static void dispatch()
 	}
 	else
 	{
-		fprintf(stderr, "Unsupported command: %x\n", op);
-		abort();
+		sc_reg_setFlag(WRONG_COMMAND_FLAG, 1);
+		tickData.state = es_halt;
 	}
 }
 
@@ -94,13 +94,18 @@ void sc_intHandler_tick()
 		break;
 
 	case es_opHandled:
-		sc_reg_incInstructionCounter();
-		tickData.state = es_shouldLoadOp;
+
 		break;
 
 	default:
 		assert(0);
 		break;
+	}
+
+	if (tickData.state == es_opHandled)
+	{
+		sc_reg_incInstructionCounter();
+		tickData.state = es_shouldLoadOp;
 	}
 
 	if (tickData.state == es_halt)

@@ -35,6 +35,8 @@ void disasm()
 
 void dump()
 {
+	printf("=================\n");
+	printf("Tick: %d\n", sc_clockGenerator_getTicksElapsed());
 	printf("State: %d\n", tickData.state);
 	printf("Acc: %d\n", sc_reg_getAccumulator());
 	printf("IC: %d\n", sc_reg_getInstructionCounter());

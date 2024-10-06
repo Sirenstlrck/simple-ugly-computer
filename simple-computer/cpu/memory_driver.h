@@ -10,7 +10,7 @@ static void loadInstruction()
 	int ic = sc_reg_getInstructionCounter();
 	Word_t op;
 	MemoryAccessResult_t accessResult = sc_memoryController_get(ic, &op);
-	sc_reg_downtimeCounterAdd(accessResult.cost);
+	sc_reg_downtimeCounterAdd(accessResult.cost - 1);
 	if (accessResult.outOfBoundsError)
 	{
 		sc_reg_setFlag(MEM_OUT_OF_BOUNDS_FLAG, 1);
