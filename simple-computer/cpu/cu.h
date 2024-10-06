@@ -21,82 +21,81 @@ static void setJumpIf(int condition, int address)
 
 static void sc_cu_start(int op, int operand)
 {
-	if (Load || Mova)
-		switch (op)
-		{
-		case Load:
-			loadData(operand);
-			break;
-		case Store:
-			storeData(operand, sc_reg_getAccumulator());
-			tickData.state = es_opHandled;
-			break;
+	switch (op)
+	{
+	case Load:
+		loadData(operand);
+		break;
+	case Store:
+		storeData(operand, sc_reg_getAccumulator());
+		tickData.state = es_opHandled;
+		break;
 
-		case Halt:
-			tickData.state = es_halt;
-			break;
+	case Halt:
+		tickData.state = es_halt;
+		break;
 
 #pragma region Jumps
-		case Jump:
-			setJumpIf(1, operand);
-			break;
+	case Jump:
+		setJumpIf(1, operand);
+		break;
 
-		case Jneg:
+	case Jneg:
 
-			setJumpIf(									  //
-				sc_word_getSign(sc_reg_getAccumulator()), //
-				operand									  //
-			);
-			break;
+		setJumpIf(									  //
+			sc_word_getSign(sc_reg_getAccumulator()), //
+			operand									  //
+		);
+		break;
 
-		case Jz:
-			setJumpIf(						  //
-				sc_reg_getAccumulator() == 0, //
-				operand						  //
-			);
-			break;
+	case Jz:
+		setJumpIf(						  //
+			sc_reg_getAccumulator() == 0, //
+			operand						  //
+		);
+		break;
 
-		case Jns:
-			setJumpIf(									   //
-				!sc_word_getSign(sc_reg_getAccumulator()), //
-				operand									   //
-			);
-			break;
+	case Jns:
+		setJumpIf(									   //
+			!sc_word_getSign(sc_reg_getAccumulator()), //
+			operand									   //
+		);
+		break;
 
-		case Jc:
-			setJumpIf(								//
-				sc_reg_isFlagSetted(OVERFLOW_FLAG), //
-				operand								//
-			);
-			break;
+	case Jc:
+		setJumpIf(								//
+			sc_reg_isFlagSetted(OVERFLOW_FLAG), //
+			operand								//
+		);
+		break;
 
-		case Jnc:
-			setJumpIf(								 //
-				!sc_reg_isFlagSetted(OVERFLOW_FLAG), //
-				operand								 //
-			);
-			break;
+	case Jnc:
+		setJumpIf(								 //
+			!sc_reg_isFlagSetted(OVERFLOW_FLAG), //
+			operand								 //
+		);
+		break;
 
-		case Jp:
-			setJumpIf(							  //
-				sc_reg_getAccumulator() % 2 == 0, // I hope i got it
-				operand							  //
-			);
-			break;
+	case Jp:
+		setJumpIf(							  //
+			sc_reg_getAccumulator() % 2 == 0, // I hope i got it
+			operand							  //
+		);
+		break;
 
-		case Jnp:
-			setJumpIf(							  //
-				sc_reg_getAccumulator() % 2 != 0, //
-				operand							  //
-			);
+	case Jnp:
+		setJumpIf(							  //
+			sc_reg_getAccumulator() % 2 != 0, //
+			operand							  //
+		);
 
-			break;
+		break;
 #pragma endregion Jumps
 
-		default:
-			assert(0);
-			break;
-		}
+	default:
+		assert(0);
+		break;
+	}
 }
 
 static void sc_cu_continue(int op, int operand)

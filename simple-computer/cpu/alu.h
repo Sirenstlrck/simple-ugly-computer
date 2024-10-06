@@ -17,14 +17,21 @@ static void sc_alu_start(int op, int operand)
 	{
 		loadData(operand);
 	}
+	else if (op == Not)
+	{
+		storeData(operand, sc_reg_getAccumulator());
+		tickData.state = es_opHandled;
+	}
 	// TODO: ubercomplicated funcs that requires 2 loads
 }
 
+// In the end state sets as es_opHandled
 static void sc_alu_continue(int op, int operand)
 {
 	Word_t res;
 	switch (op)
 	{
+#pragma region BasicMath
 	case Add:
 		ArithmeticResult_t add =
 			sc_word_addChecked(sc_reg_getAccumulator(), tickData.loadedData);
@@ -52,6 +59,12 @@ static void sc_alu_continue(int op, int operand)
 		sc_reg_setFlag(ZERO_DIV_FLAG, div.zeroDiv);
 		sc_reg_setAccumulator(div.result);
 		break;
+#pragma endregion BasicMath
+
+#pragma region BasicLogic
+	case Neg:
+		sc_reg_setAccumulator(sc_word_getSign(tickData.loadedData));
+		break;
 
 	case And:
 		sc_reg_setAccumulator(sc_reg_getAccumulator() && tickData.loadedData);
@@ -66,6 +79,7 @@ static void sc_alu_continue(int op, int operand)
 		sc_reg_setAccumulator((!!sc_reg_getAccumulator()) ^
 							  (!!tickData.loadedData));
 		break;
+#pragma endregion BasicLogic
 
 	case Chl:
 		sc_reg_setAccumulator(sc_reg_getAccumulator() << tickData.inputedData);
