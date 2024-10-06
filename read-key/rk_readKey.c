@@ -1,3 +1,4 @@
+#include "console.h"
 #include "cpu/registers.h"
 #include "read_key.h"
 #include "terminal.h"
@@ -51,31 +52,35 @@ int rk_readValue(int *value, int timeout)
 			}
 			hex_value[counter] = '\0';
 			int sign		   = hex_value[0] == '-' ? 1 : 0;
-			int word;
-			sscanf(hex_value + 1, "%04x", &word);
+			// if (hex_value[0] == '-')
+			// {
+			// 	if (word > (MAX_WORD >> 1))
+			// 	{
+			// 		word = 0 | SIGN_MASK | 1;
+			// 	}
+			// 	else
+			// 	{
+			// 		word = ((~word) & MAX_WORD) + 1;
+			// 	}
+			// }
+			// else
+			// {
+			// 	if (word > ((MAX_WORD >> 1) - 1))
+			// 	{
+			// 		word = ((MAX_WORD >> 1) - 1);
+			// 	}
+			// }
+			int operand, command;
+			sscanf(hex_value + 1, "%02x", &command);
+			sscanf(hex_value + 3, "%02x", &operand);
 
-			if (hex_value[0] == '-')
+			if (sc_word_commandEncode(sign, command, operand, value) == 0)
 			{
-				if (word > (MAX_WORD >> 1))
-				{
-					word = 0 | SIGN_MASK | 1;
-				}
-				else
-				{
-					word = ((~word) & MAX_WORD) + 1;
-				}
+				return 0;
 			}
-			else
-			{
-				if (word > ((MAX_WORD >> 1) - 1))
-				{
-					word = ((MAX_WORD >> 1) - 1);
-				}
-			}
+			// *value = word;
 
-			*value = word;
-
-			return 0;
+			return -1;
 		}
 		return -1;
 	}

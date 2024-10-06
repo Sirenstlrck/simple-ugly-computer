@@ -29,7 +29,6 @@ extern Label_t accumulatorLabel;
 extern Label_t selecionLabel;
 extern int selectedAddressIndex;
 
-void mc_staticFrames_render();
 void mc_clearSpace(int x_start, int y_start, int x_end, int y_end);
 
 void mc_memoryManipulator_move(enum Keys key);
@@ -40,13 +39,13 @@ void mc_selectedLabel_set(int address);
 
 void mc_start();
 
+void mc_staticFrames_render();
 void mc_updateRender();
 void mc_memoryManipulator_render();
 void mc_instructionCounter_render();
 void mc_accumulator_render();
 void mc_flags_render();
 void mc_cache_render();
-
 void mc_formats_render(Word_t word);
 
 char *mc_wordToOct(Word_t word);

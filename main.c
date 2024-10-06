@@ -19,10 +19,6 @@ int main()
 	// }
 
 	sc_memoryController_init();
-	for (int i = 0; i < MEMORY_SIZE; ++i)
-	{
-		sc_memoryController_set(i, rand() % MAX_WORD - 1);
-	}
 
 	rk_terminal_save();
 	sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);

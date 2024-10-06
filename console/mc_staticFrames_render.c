@@ -9,7 +9,7 @@ void mc_staticFrames_render()
 	bc_frame_draw(80, 2, 37, 11, 2, White, Black, " Edit cell ", Green, Black);
 	bc_frame_draw(3, 2, 65, 15, 27, White, Black, "  RAM  ", Red, Black);
 
-	bc_frame_draw(1, 17, 66, 7, 27, White, Black, "  Cache  ", Red, Black);
+	bc_frame_draw(1, 17, 67, 7, 27, White, Black, "  Cache  ", Red, Black);
 	bc_frame_draw(69, 2, 10, 11, 2, White, Black, " Flags ", Red, Black);
 	bc_frame_draw(69, 13, 48, 4, 2, White, Black, " Format ", Green, Black);
 
@@ -32,6 +32,7 @@ void mc_staticFrames_render()
 	write(STDOUT_FILENO, "F5 - accumulator", 17);
 	mt_cursorPosition_set(82, 28);
 	write(STDOUT_FILENO, "F6 - ICounter", 14);
-
+	Label_t label = {6, 3, 0, Black, White};
+	selecionLabel = label;
 	mc_updateRender();
 }

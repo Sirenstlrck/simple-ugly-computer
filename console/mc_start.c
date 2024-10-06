@@ -23,12 +23,7 @@ void mc_start()
 	int exitFlag = 0;
 	signal(SIGUSR1, signal_handle);
 
-	sc_clockGenerator_init();
-	sc_clockGenerator_setTickHook(mc_updateRender);
 	mc_updateRender();
-
-	mc_memoryManipulator_move(Key_Down);
-	mc_memoryManipulator_move(Key_Up);
 
 	enum Keys key;
 	while (!exitFlag)
@@ -148,13 +143,15 @@ void mc_start()
 			{
 				if (sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG))
 				{
+					sc_clockGenerator_init();
+					sc_clockGenerator_setTickHook(mc_updateRender);
 					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 0);
 					sc_clockGenerator_run();
 				}
 				else
 				{
 					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
-					sc_reg_reset();
+					sc_clockGenerator_stop();
 				}
 			}
 		}
