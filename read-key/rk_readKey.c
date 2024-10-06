@@ -50,20 +50,11 @@ int rk_readValue(int *value, int timeout)
 				}
 			}
 			hex_value[counter] = '\0';
-<<<<<<< HEAD
 			int sign		   = hex_value[0] == '-' ? 1 : 0;
 			int word;
 			sscanf(hex_value + 1, "%04x", &word);
 
 			if (hex_value[0] == '-')
-=======
-			int sign = hex_value[0] == '-' ? 1 : 0;
-			int command, operand;
-			sscanf(hex_value + 1, "%02x", &command);
-			sscanf(hex_value + 3, "%02x", &operand);
-			//+1234
-			if (sc_word_commandEncode(sign, command, operand, value) == -1)
->>>>>>> refs/remotes/origin/master
 			{
 				if (word > (MAX_WORD >> 1))
 				{
