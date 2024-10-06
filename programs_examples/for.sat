@@ -1,0 +1,7 @@
+001 LOAD    051
+002 SUB     050     ; i--
+003 JNS     002
+004 HALT    0
+
+050 +001            ; for dec
+051 +010            ; iterations count
