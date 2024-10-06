@@ -18,13 +18,9 @@ int rk_readValue(int *value, int timeout)
 	ready = select(STDIN_FILENO + 1, &readfds, NULL, NULL, &tv);
 
 	if (ready < 0)
-	{
-		return -1;
-	}
-	else if (ready == 0)
-	{
 		return 0;
-	}
+	else if (ready == 0)
+		return -1;
 	else
 	{
 		if (FD_ISSET(STDIN_FILENO, &readfds))
@@ -40,30 +36,55 @@ int rk_readValue(int *value, int timeout)
 					{
 						if (ch != '-' && ch != '+')
 						{
-							return 0;
+							return -1;
 						}
 					}
 					else
 					{
 						if ((ch < '0' || ch > '9') && (ch < 'a' || ch > 'f'))
 						{
-							return 0;
+							return -1;
 						}
 					}
 					hex_value[counter++] = ch;
 				}
 			}
 			hex_value[counter] = '\0';
+<<<<<<< HEAD
+			int sign = hex_value[0] == '-' ? 1 : 0;
+			int word;
+			sscanf(hex_value + 1, "%04x", &word);
+
+			if (hex_value[0] == '-')
+=======
 			int sign		   = hex_value[0] == '-' ? 1 : 0;
 			int command, operand;
 			sscanf(hex_value + 1, "%02x", &command);
 			sscanf(hex_value + 3, "%02x", &operand);
 			//+1234
 			if (sc_word_commandEncode(sign, command, operand, value) == -1)
+>>>>>>> refs/remotes/origin/master
 			{
-				return 0;
+				if (word > (MAX_WORD >> 1))
+				{
+					word = 0 | SIGN_MASK | 1;
+				}
+				else
+				{
+					word = ((~word) & MAX_WORD) + 1;
+				}
 			}
-			return 1;
+			else
+			{
+				if (word > ((MAX_WORD >> 1) - 1))
+				{
+					word = ((MAX_WORD >> 1) - 1);
+				}
+			}
+
+			*value = word;
+
+			return 0;
 		}
 		return -1;
 	}
@@ -126,9 +147,13 @@ int rk_readKey(enum Keys *key)
 			break;
 		}
 	}
-	else if (buffer[0] == '\r' && buffer[1] == '\0')
+	else if (buffer[0] == '\n' && buffer[1] == '\0')
 	{
 		*key = Key_Enter;
+	}
+	else if (buffer[0] == '\b' || buffer[0] == 127)
+	{
+		*key = Key_Backspace;
 	}
 	else
 	{

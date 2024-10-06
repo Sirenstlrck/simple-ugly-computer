@@ -1,3 +1,4 @@
+#include "../simple-computer/memory/memory.h"
 #include "console.h"
 
 void signal_handle(int signum)
@@ -40,47 +41,115 @@ void mc_start()
 				{
 					rk_terminal_save();
 					rk_terminalMode_set(1, 100, 0, 1, 0);
-					mt_cursorPosition_set(selecionLabel.x_position,
-										  selecionLabel.y_position);
 					int newValue;
 					selecionLabel.background_color = Yellow;
 					mc_label_render(selecionLabel);
-					if (rk_readValue(&newValue, 100000))
+
+					mt_cursorPosition_set(selecionLabel.x_position,
+										  selecionLabel.y_position);
+
+					int res = rk_readValue(&newValue, 100000);
+
+					if (res == 0)
 					{
-						Label_t updatedLabel;
 						switch (selectedAddressIndex)
 						{
 						case 128:
 							sc_reg_setAccumulator(newValue);
-							updatedLabel = accumulatorLabel;
+							mc_accumulator_init();
+							selecionLabel = accumulatorLabel;
+							selectedAddressIndex = 128;
 							break;
 						case 129:
 							sc_reg_setInstructionCounter(newValue);
-							updatedLabel = instractionCounterLabel;
-							break;
-						deafult:
-							sc_memoryController_set(selectedAddressIndex,
-													newValue);
-							updatedLabel =
-								memoryManipulator[selectedAddressIndex];
-							mc_label_render(
-								memoryManipulator[selectedAddressIndex]);
+							mc_instructionCounter_init();
+							selecionLabel = instractionCounterLabel;
+							selectedAddressIndex = 129;
 							break;
 						}
-						updatedLabel.content = newValue;
-						mc_label_render(updatedLabel);
+						if (selectedAddressIndex >= 0 &&
+							selectedAddressIndex < MEMORY_SIZE)
+						{
+							sc_memoryController_set(selectedAddressIndex,
+													newValue);
+							mc_memoryManipulator_init();
+							mc_memoryManipulator_render();
+							selecionLabel =
+								memoryManipulator[selectedAddressIndex];
+						}
 					}
+					selecionLabel.background_color = White;
+					selecionLabel.foreground_color = Black;
+					mc_label_render(selecionLabel);
 					rk_terminal_restore();
+				}
+				if (key == Key_Backspace)
+				{
+					sc_memoryController_set(selectedAddressIndex, 0);
+					mc_memoryManipulator_init();
+					mc_memoryManipulator_render();
+					mc_selectedLabel_set(selectedAddressIndex);
+					mc_label_render(selecionLabel);
 				}
 				if (key == Key_L)
 				{
+					mt_cursorPosition_set(4, 31);
+					write(STDOUT_FILENO, "Load file: ", 12);
+					fflush(stdin);
+					char path[100];
+					int size;
+					size = read(0, path, sizeof(path));
+
+					path[size - 1] = '\0';
+					sc_memory_load(path);
+
+					mt_cursorPosition_set(4, 31);
+					mt_deleteLine();
+
+					mc_memoryManipulator_init();
+					mc_memoryManipulator_render();
+					mc_selectedLabel_set(0);
 				}
 				if (key == Key_S)
 				{
+					mt_cursorPosition_set(4, 31);
+
+					write(STDOUT_FILENO, "Save file: ", 12);
+					fflush(stdin);
+					char path[100];
+					int size;
+					size = read(0, path, sizeof(path));
+
+					path[size - 1] = '\0';
+					sc_memory_save(path);
+
+					mt_cursorPosition_set(4, 31);
+					mt_deleteLine();
+
+					mc_memoryManipulator_init();
+					mc_memoryManipulator_render();
+					mc_selectedLabel_set(selectedAddressIndex);
+				}
+				if (key == Key_T)
+				{
+					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 0);
+					raise(SIGALRM);
+					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
 				}
 			}
 			if (key == Key_Esc)
 				exitFlag = 1;
+			if (key == Key_R)
+			{
+				if (!sc_reg_isFlagSetted(IGNORE_IMPULSE_FLAG))
+				{
+				}
+				else
+				{
+					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
+					sc_reg_reset();
+				}
+			}
 		}
 	}
 }

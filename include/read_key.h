@@ -18,9 +18,9 @@
 #include "word/def.h"
 #include "word/word.h"
 
-static struct termios lastSavedTermios;
-static int lastSavedTermios_echoMode;
-static int lastSavedTermios_signalValue;
+extern struct termios lastSavedTermios;
+extern int lastSavedTermios_echoMode;
+extern int lastSavedTermios_signalValue;
 
 enum Keys
 {
@@ -38,6 +38,7 @@ enum Keys
 	Key_Right,
 	Key_Enter,
 	Key_Empty,
+	Key_Backspace,
 };
 
 int rk_readKey(enum Keys *);

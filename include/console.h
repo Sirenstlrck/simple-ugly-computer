@@ -27,7 +27,7 @@ extern Label_t memoryManipulator[MEMORY_SIZE];
 extern Label_t instractionCounterLabel;
 extern Label_t accumulatorLabel;
 extern Label_t selecionLabel;
-static int selectedAddressIndex = 0;
+extern int selectedAddressIndex;
 
 void mc_staticFrames_render();
 void mc_clearSpace(int x_start, int y_start, int x_end, int y_end);
