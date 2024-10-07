@@ -19,6 +19,7 @@ static int verifyFlag(int flag)
 }
 
 int sc_reg_getAccumulator() { return accumulator; }
+
 void sc_reg_setAccumulator(int value) { accumulator = value; }
 
 int sc_reg_getInstructionCounter() { return instructionCounter; }

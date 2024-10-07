@@ -3,6 +3,9 @@
 
 #include "memory/config.h"
 #include "word/def.h"
+#include "word/word.h"
+
+#define INOUT_MEM_SIZE 5
 
 void sc_memoryController_init();
 
@@ -21,5 +24,7 @@ int sc_memoryController_setDirect(int address, Word_t out);
 
 MemoryAccessResult_t sc_memoryController_get(int address, Word_t *out);
 MemoryAccessResult_t sc_memoryController_set(int address, Word_t value);
+
+extern char inoutMem[INOUT_MEM_SIZE][256];
 
 #endif

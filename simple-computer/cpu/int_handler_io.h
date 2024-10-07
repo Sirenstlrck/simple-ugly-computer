@@ -1,3 +1,6 @@
+#ifndef SC_INT_HANDLER_IO_H
+#define SC_INT_HANDLER_IO_H
+
 #include "cpu/operation.h"
 #include "memory_driver.h"
 #include "state.h"
@@ -57,3 +60,5 @@ static void sc_intHandler_io_handle(int op, int operand)
 		assert(0);
 	}
 }
+
+#endif

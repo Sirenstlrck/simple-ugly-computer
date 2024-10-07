@@ -1,9 +1,12 @@
 #include <assert.h>
 #include <memory.h>
+#include <stdio.h>
 
 #include "cache.h"
 #include "memory.h"
 #include "memory/controller.h"
+
+char inoutMem[INOUT_MEM_SIZE][256];
 
 static void dumpLine(CacheLine_t line)
 {
@@ -105,6 +108,16 @@ MemoryAccessResult_t sc_memoryController_set(int address, Word_t value)
 	SeekResult_t seekResult = seek(address);
 	if (seekResult.accessResult.outOfBoundsError)
 		return seekResult.accessResult;
+
+	int sign, command, operand;
+	sc_word_commandDecode(value, &sign, &command, &operand);
+
+	for (int i = 0; i < INOUT_MEM_SIZE - 1; ++i)
+	{
+		strcpy(inoutMem[i], inoutMem[i + 1]);
+	}
+	sprintf(inoutMem[INOUT_MEM_SIZE - 1], "%03d >> %c%02X%02X", address,
+			(sign & 1) ? '-' : '+', command, operand);
 
 	sc_memoryCache_set(seekResult.cacheSeekResult, value);
 

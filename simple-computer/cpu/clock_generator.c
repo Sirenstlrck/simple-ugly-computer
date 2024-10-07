@@ -6,6 +6,7 @@
 
 #include "cpu/clock_generator.h"
 #include "cpu/int_handler.h"
+#include <cpu/registers.h>
 
 static unsigned int ticksElapsed;
 
@@ -19,6 +20,9 @@ void sc_clockGenerator_tick()
 {
 	ticksElapsed++;
 	sc_intHandler_tick();
+
+	if (sc_reg_getFlags(MEM_OUT_OF_BOUNDS_FLAG))
+		sc_clockGenerator_stop();
 
 	if (tickHook)
 		tickHook();
@@ -52,7 +56,7 @@ void sc_clockGenerator_run()
 
 	struct itimerval nval, oval;
 	nval.it_interval.tv_sec	 = 0;
-	nval.it_interval.tv_usec = 500000;
+	nval.it_interval.tv_usec = TICK_USEC;
 	nval.it_value.tv_sec	 = 0;
 	nval.it_value.tv_usec	 = 1;
 	if (setitimer(ITIMER_REAL, &nval, NULL) == -1)

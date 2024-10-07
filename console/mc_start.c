@@ -138,8 +138,8 @@ void mc_start()
 				{
 					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 0);
 					sc_clockGenerator_tick();
-					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
 					mc_updateRender();
+					sc_reg_setFlag(IGNORE_IMPULSE_FLAG, 1);
 				}
 			}
 			if (key == Key_Esc)
@@ -160,10 +160,6 @@ void mc_start()
 				}
 			}
 		}
-		if (sc_intHandler_isPendingInput())
-			mc_inputRequest_render();
-		if (sc_intHandler_wantsToWriteCpuInfo())
-			mc_cpuInfo_render();
 		mc_updateRender();
 	}
 }

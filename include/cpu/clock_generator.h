@@ -1,5 +1,7 @@
 #ifndef SC_CLOCK_GENERATOR_H
 #define SC_CLOCK_GENERATOR_H
+// 500000 - default
+#define TICK_USEC 250000
 
 void sc_clockGenerator_setTickHook(void (*hook)());
 

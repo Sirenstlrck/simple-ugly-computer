@@ -60,7 +60,7 @@ int ensureScanInt(char *str)
 {
 	int addr;
 	errno		 = 0;
-	int scanfRes = sscanf(str, "%d", &addr);
+	int scanfRes = sscanf(str, "%x", &addr);
 	if (scanfRes != 1)
 	{
 		if (errno != 0)
